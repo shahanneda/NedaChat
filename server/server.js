@@ -8,7 +8,7 @@ server.listen(80);
 console.log("NedaChat Server Started!");
 
 
-app.get('/', function (req, res) {
+express.get('/', function (req, res) {
         //res.sendFile(__dirname + '/index.html');
         io.on('connection', function (socket) {
                 
@@ -24,7 +24,7 @@ app.get('/', function (req, res) {
                 socket.on("connect", function(data){
                         console.log("New User Connected: name" + data.user.name);
                         io.emit("newUser", data);
-                }
+                });
 
 
         });
