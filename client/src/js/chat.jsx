@@ -2,6 +2,7 @@ import React, {Component} from "react";
 
 import io from 'socket.io-client/dist/socket.io';
 
+import MessageSend from "./MessageSend.jsx"
 
 class Chat extends Component {
          
@@ -37,6 +38,10 @@ class Chat extends Component {
                 return(
                         <div>
                                 Chat Component
+                                {/* <MessageReceive socket={this.state.socket} />  */}
+
+                                <MessageSend socket={this.state.socket} />
+
                                 <button onClick={this.handleButtonClick}>
                                         button           
                                 </button>
