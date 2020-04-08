@@ -56,7 +56,7 @@ class MessageReceive extends Component{
                         <div>
                                 {
                                         Object.keys(this.state.chats).map( key =>
-                                                <ChatGroup chat={this.state.chats[key] } />
+                                                <ChatGroup key= {key} chat={this.state.chats[key] } />
                                         )
 
                                 }

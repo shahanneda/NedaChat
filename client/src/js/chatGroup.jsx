@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-
+import Message from "./Message.jsx"
 class ChatGroup extends Component{
 
         constructor(props){
@@ -15,8 +15,9 @@ class ChatGroup extends Component{
                                 <h1> {this.props.chat.name} </h1>
                                 {
                                         Object.keys(this.props.chat.messages).map(  key => {
-                                        return this.props.chat.messages[key].messageBody;
-                                })
+                                                let message = this.props.chat.messages[key]
+                                                return <Message key={message.id} author={message.fromUserName} body={message.messageBody} />;
+                                        })
                                 }
                         </div>
                 );
