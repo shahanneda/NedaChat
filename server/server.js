@@ -9,11 +9,12 @@ let chats = [];
 
 let userConnections = [];
 
-chats += [{
-        name:"Group 1",
-        usersInChat:["shahanneda", "sam"],
-        messages:[],
-}];
+chats["Group 1"] =
+        { 
+                name:"Group 1",
+                usersInChat:["shahanneda", "sam"],
+                messages:[],
+        }
 
 server.listen(80);
 console.log("NedaChat Server Started!");
@@ -37,18 +38,21 @@ io.on('connection', function (socket) {
         });
 
         socket.on("newMessage", function(data){
-                let chat = chats[data.indexOfChat]; // find chat using unique identifier
+                let chat = chats[data.chatName]; // find chat using unique identifier
                 chat.messages += data; //  data is the message object 
                 
                 let usersInChat = chat.usersInChat;
+                console.log(usersInChat);
+                for(let username of usersInChat){
 
-                for(let user of usersInChat){
-                        let userConnection = userConnections[user.name];
-                         
-                        userConnection.emit("chatUpdate", chat);
+                        let userConnection = userConnections[username];
+                        console.log("trying gto get user: " + username + " user connections " + userConnections);
+                        if(userConnection){
+                                userConnection.emit("chatUpdate", chat);
+                        }
                 }
 
-                socket.broadcast.emit("newMessage", data);
+                //socket.broadcast.emit("newMessage", data);
                 console.log("New Message: " + data);
         });
 

@@ -7,7 +7,7 @@ const wrapper = document.getElementById("container");
 
 ReactDOM.render(
         <div>
-                <Chat />
+                <Chat username="shahanneda"/>
         </div>
 , wrapper);
 

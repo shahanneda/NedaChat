@@ -5,10 +5,11 @@ import io from 'socket.io-client/dist/socket.io';
 import MessageSend from "./MessageSend.jsx"
 import MessageReceive from "./MessageReceive.jsx"
 
+const username = "shahanneda"; //TEMP
 class Chat extends Component {
          
-        constructor(){
-                super();
+        constructor(props){
+                super(props);
                 let socket = io.connect('http://localhost:80');
 
                 this.state =  {
@@ -18,7 +19,7 @@ class Chat extends Component {
                         console.log("Connected!");
                         socket.emit("NewConnection", {
                                 user:{
-                                        name:"Shahan",
+                                        name:username,
                                 }
                         });
                 });
@@ -34,9 +35,9 @@ class Chat extends Component {
                 return(
                         <div>
                                 Chat Component
-                                 <MessageReceive socket={this.state.socket} /> 
+                                 <MessageReceive socket={this.state.socket} username={this.props.username} /> 
 
-                                <MessageSend socket={this.state.socket} />
+                                <MessageSend socket={this.state.socket} username={this.props.username}  />
 
                         </div>
 
