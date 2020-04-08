@@ -1,5 +1,7 @@
 import React, {Component} from "react";
 
+import ChatGroup from "./ChatGroup.jsx";
+
 class MessageReceive extends Component{
         constructor(props){
                 super(props)
@@ -50,14 +52,14 @@ class MessageReceive extends Component{
         messageBoxOnChange(event){
         }
         render(){
-                console.log(this.state.chats);
-                for(let chat in this.state.chats){
-                        console.log("Caht  " + chat);
-                }
                 return(
                         <div>
-                                
+                                {
+                                        Object.keys(this.state.chats).map( key =>
+                                                <ChatGroup chat={this.state.chats[key] } />
+                                        )
 
+                                }
                         </div>
 
                 );

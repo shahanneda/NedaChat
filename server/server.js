@@ -13,14 +13,14 @@ chats["Group 1"] =
         { 
                 name:"Group 1",
                 usersInChat:["shahanneda", "sam"],
-                messages:[],
+                messages:{},
         }
 
 chats["Group 2"] =
         { 
                 name:"Group 2",
                 usersInChat:["shahanneda", "sam"],
-                messages:[],
+                messages:{},
         }
 
 server.listen(80);
@@ -73,7 +73,7 @@ io.on('connection', function (socket) {
 
         socket.on("newMessage", function(data){
                 let chat = chats[data.chatName]; // find chat using unique identifier
-                chat.messages += data; //  data is the message object 
+                chat.messages[data.id] = data; //  data is the message object 
                 
                 let usersInChat = chat.usersInChat;
                 console.log(usersInChat);
@@ -87,7 +87,8 @@ io.on('connection', function (socket) {
                 }
 
                 //socket.broadcast.emit("newMessage", data);
-                console.log("New Message: " + data);
+                console.log("New Message: ");
+                console.log(chat);
         });
 
 
@@ -103,7 +104,7 @@ io.on('connection', function (socket) {
                 let newChat = {
                         name:data.name,
                         usersInChat: data.usersInChat,
-                        messages: [],
+                        messages: {},
                 };
 
                 chats += newChat;

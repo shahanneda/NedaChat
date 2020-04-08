@@ -35,7 +35,7 @@ class Chat extends Component {
                 return(
                         <div>
                                 Chat Component
-                                 <MessageReceive socket={this.state.socket} username={this.props.username} /> 
+                                <MessageReceive socket={this.state.socket} username={this.props.username} /> 
 
                                 <MessageSend socket={this.state.socket} username={this.props.username}  />
 
