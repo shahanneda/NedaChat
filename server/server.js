@@ -19,8 +19,8 @@ io.on('connection', function (socket) {
                 io.emit("newUser", data);
                 console.log("New User Connected: name: " + data.user.name);
         });
-        socket.on("buttonClicked", function(data){
-                io.emit("buttonClicked", data);
-                console.log("button clicked");
+        socket.on("newMessage", function(data){
+                socket.broadcast.emit("newMessage", data);
+                console.log("New Message: " + data);
         });
 });

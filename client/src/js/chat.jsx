@@ -3,6 +3,7 @@ import React, {Component} from "react";
 import io from 'socket.io-client/dist/socket.io';
 
 import MessageSend from "./MessageSend.jsx"
+import MessageReceive from "./MessageReceive.jsx"
 
 class Chat extends Component {
          
@@ -14,7 +15,7 @@ class Chat extends Component {
                         socket:socket,
                 }
                 socket.on("connect", function (data){
-                        //console.log("Connected!");
+                        console.log("Connected!");
                         socket.emit("NewConnection", {
                                 user:{
                                         name:"Shahan",
@@ -25,26 +26,18 @@ class Chat extends Component {
                 socket.on("buttonClicked", function (data){
                         console.log("button clicked!");
                 });
-                this.handleButtonClick = this.handleButtonClick.bind(this);
                 console.log("chat init");
         }
         
-        handleButtonClick(){
-                console.log("sent message");
-               this.state.socket.emit("buttonClicked", {}); 
-        }
 
         render(){
                 return(
                         <div>
                                 Chat Component
-                                {/* <MessageReceive socket={this.state.socket} />  */}
+                                 <MessageReceive socket={this.state.socket} /> 
 
                                 <MessageSend socket={this.state.socket} />
 
-                                <button onClick={this.handleButtonClick}>
-                                        button           
-                                </button>
                         </div>
 
                 )
