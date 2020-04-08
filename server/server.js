@@ -10,23 +10,17 @@ console.log("NedaChat Server Started!");
 
 express.get('/', function (req, res) {
         //res.sendFile(__dirname + '/index.html');
-        io.on('connection', function (socket) {
-                
-
-                socket.emit('news', { 
-                        hello: 'world' 
-                });
-
-                socket.on('my other event', function (data) {
-                        console.log(data);
-                });
-
-                socket.on("connect", function(data){
-                        console.log("New User Connected: name" + data.user.name);
-                        io.emit("newUser", data);
-                });
-
-
-        });
 });
 
+io.on('connection', function (socket) {
+        socket.on("connect", function(data){
+        });
+        socket.on("NewConnection", function(data){
+                io.emit("newUser", data);
+                console.log("New User Connected: name: " + data.user.name);
+        });
+        socket.on("buttonClicked", function(data){
+                io.emit("buttonClicked", data);
+                console.log("button clicked");
+        });
+});
