@@ -3,7 +3,20 @@ body{
 }
 
 .message-wrapper{
-    border-radius: 21rem !important;
-      background-color: #e0fffe;
-    
+        border-radius: 21rem !important;
+        background-color: #e0fffe;
+        margin-top: 15px;
+        max-width: 47%;
+        left: 25%;
+
+}
+.message-wrapper-author{
+        left:50%; 
+}
+.message-sender {
+    color: darkblue;
+}
+
+.chat-title{
+        text-align: center;
 }

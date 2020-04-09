@@ -10,7 +10,7 @@ class Chat extends Component {
          
         constructor(props){
                 super(props);
-                let socket = io.connect('http://localhost:80');
+                let socket = io.connect('http://192.168.1.22');
 
                 this.state =  {
                         socket:socket,

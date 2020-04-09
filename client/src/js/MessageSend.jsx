@@ -27,12 +27,16 @@ class MessageSend extends Component{
         }
         render(){
                 return(
-                        <div>
-                                <input type="text" value={this.state.currentMessageBoxValue} onChange={this.messageBoxOnChange}/>
+                        <div className="message-send-wrapper input-group -flex justify-content-center">
+                                <div className="message-input-box-wrapper">
+                                <input className="input-box form-control" type="text" value={this.state.currentMessageBoxValue} onChange={this.messageBoxOnChange}/>
+                                </div>
 
-                                <button onClick={this.handleButtonClick}>
+                                <div className="send-button-wrapper input-group-btn">
+                                <button className="send-button btn btn-primary" onClick={this.handleButtonClick}>
                                         Send           
                                 </button>
+                                </div>
                         </div>
 
                 );
