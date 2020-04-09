@@ -14,7 +14,7 @@ class IndividualChat extends Component{
                         <div className="card row">
                                 <div className="card-body">
                                         <h1 className="display-3 text-primary chat-title"> {this.props.chat.name} </h1>
-                                        <div className="list-group chatBody">
+                                        <div className="list-group chat-body">
                                                 {
                                                         Object.keys(this.props.chat.messages).map(  key => {
                                                                 let message = this.props.chat.messages[key]

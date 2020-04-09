@@ -19,6 +19,9 @@ class MessageReceive extends Component{
                         console.log( newChats);
                         this.setState( { chats: newChats } ) ;
                 });
+                this.props.socket.on("disconnect", data=>{
+                        console.log("DISCONNECTED!!");        
+                });
 
                 this.props.socket.on("chatUpdate", data => { // use the => fuction so that we can uset he state inside, this is because the this is getting binded
                         let chat = data;
@@ -34,7 +37,7 @@ class MessageReceive extends Component{
         }
         
         componentDidMount(){
-                fetch("http://192.168.1.22/getChats")
+                fetch("http://localhost:80/getChats")
                         .then(res => res.json())
                         .then(
                                 (result) => {

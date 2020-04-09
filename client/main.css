@@ -20,3 +20,38 @@ body{
 .chat-title{
         text-align: center;
 }
+.chat-body{
+        height:70vh;
+        overflow:auto;
+        padding-bottom:1vh;
+}
+.bottom-bar{
+        position: fixed;
+        bottom: 0px;
+        left:0px;
+        background-color:teal;
+        width: 100vw;
+        height:10vh;
+}
+.message-send-wrapper{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height:100%;
+}
+
+
+
+/*
+ *
+ *
+ *
+ *
+ * left: 95vw;
+    float: left;
+    position: relative;
+    transform: translateX(-50vw);
+    width: 100%;
+
+
+    */

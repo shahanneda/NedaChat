@@ -8,7 +8,7 @@ const io = require("socket.io")(server); // setup socekt io
 let path = require("path");
 let chats = {};
 
-let userConnections = [];
+let userConnections = {};
 
 chats["Group 1"] =
         { 
@@ -88,7 +88,13 @@ io.on('connection', function (socket) {
 
         socket.on("NewConnection", function(data){
                 io.emit("newUser", data);
-                userConnections[data.user.id]  = socket;  
+                if(userConnections[data.user.id]){
+                        console.log("Found other user client id, appending");
+                        userConnections[data.user.id].push(socket);
+                }else{
+                        userConnections[data.user.id]  = [socket];  
+                }
+
                 console.log("New User Connected: name: " + data.user.name);
         });
 
@@ -99,17 +105,24 @@ io.on('connection', function (socket) {
                 let usersInChat = chat.usersInChat;
                 console.log(usersInChat);
                 for(let userid in usersInChat){
-                        console.log(userid);
-                        let userConnection = userConnections[userid];
+                        console.log("user id :" + userid);
+                        let userConnectionsForId = userConnections[userid];
                         console.log("trying gto get user: " + userid + " user connections " + userConnections);
-                        if(userConnection){
-                                userConnection.emit("chatUpdate", chat);
+                        //console.log(userConnections);
+                        if(userConnectionsForId){ //  we have to check whether user is actually in chat or not
+
+                                userConnectionsForId.map( userConnection => { // map through all of the clients of the user, the same id could have multiple sessions
+                                        if(userConnection){
+                                                userConnection.emit("chatUpdate", chat);
+                                                console.log("sending message to " + userid );
+                                        }
+                                });
                         }
                 }
 
                 //socket.broadcast.emit("newMessage", data);
                 console.log("New Message: ");
-                console.log(chat);
+                //console.log(chat);
         });
 
 
