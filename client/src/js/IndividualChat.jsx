@@ -21,11 +21,25 @@ class IndividualChat extends Component{
                                                                 return <Message key={message.id} author={message.fromUserName} body={message.messageBody} />;
                                                         })
                                                 }
+
+                                                <div style={{ float:"left", clear: "both" }}
+                                                        ref={(el) => { this.messagesEnd = el; }}>
+                                                </div>
                                         </div>
                                 </div>
                         </div>
                 );
 
+        }
+        componentDidMount() {
+                this.scrollToBottom();
+        }
+
+        componentDidUpdate() {
+                this.scrollToBottom();
+        }
+        scrollToBottom = () => {
+                this.messagesEnd.scrollIntoView({ behavior: "smooth" });
         }
 
 }

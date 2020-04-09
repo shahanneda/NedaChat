@@ -37,7 +37,7 @@ class MessageReceive extends Component{
         }
         
         componentDidMount(){
-                fetch("http://localhost:80/getChats")
+                fetch("http://192.168.1.22/getChats")
                         .then(res => res.json())
                         .then(
                                 (result) => {
