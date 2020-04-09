@@ -1,10 +1,11 @@
-const express = require("express")();
+const express = require("express");
+const app = express();
 
-const server = require("http").Server(express); // create the http servere and conenct it to socket io
+const server = require("http").Server(app); // create the http servere and conenct it to socket io
 
 const io = require("socket.io")(server); // setup socekt io
 
-
+let path = require("path");
 let chats = {};
 
 let userConnections = [];
@@ -12,23 +13,41 @@ let userConnections = [];
 chats["Group 1"] =
         { 
                 name:"Group 1",
-                usersInChat:["shahanneda", "sam"],
+                usersInChat:{
+                        "shahanneda93835498" : {
+                                id:"shahanneda93835498",
+                                username:"Shahan",
+                        },
+                        "samdrubseky435325":{
+                                id:"samdrubseky435325",
+                                username:"Sam",
+                        }
+                },
                 messages:{},
         }
 
-chats["Group 2"] =
+/*chats["Group 2"] =
         { 
                 name:"Group 2",
-                usersInChat:["shahanneda", "sam"],
+                usersInChat:{
+                        "shahanneda93835498" : {
+                                id:"shahanneda93835498",
+                                username:"Shahan",
+                        },
+                        "samdrubseky435325":{
+                                id:"samdrubseky435325",
+                                username:"Sam",
+                        }
+                },
                 messages:{},
         }
-
+        */
 server.listen(80);
 console.log("NedaChat Server Started!");
 
 
 // Add headers
-express.use(function (req, res, next) {
+app.use(function (req, res, next) {
 
     // Website you wish to allow to connect
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -46,10 +65,12 @@ express.use(function (req, res, next) {
     // Pass to next layer of middleware
     next();
 });
-express.get('/', function (req, res) {
-        //res.sendFile(__dirname + '/index.html');
+app.get('/', function (req, res) {
+        res.sendFile(path.join(__dirname + '/../client/index.html'));
 });
-express.get('/getChats', function(req,res){
+app.use(express.static(path.join(__dirname + '/../client/')));
+
+app.get('/getChats', function(req,res){
         console.log("apiEndpoint: getchats triggered");
         let storedChats = chats;
         console.log(storedChats);
@@ -67,7 +88,7 @@ io.on('connection', function (socket) {
 
         socket.on("NewConnection", function(data){
                 io.emit("newUser", data);
-                userConnections[data.user.name]  = socket;  
+                userConnections[data.user.id]  = socket;  
                 console.log("New User Connected: name: " + data.user.name);
         });
 
@@ -77,10 +98,10 @@ io.on('connection', function (socket) {
                 
                 let usersInChat = chat.usersInChat;
                 console.log(usersInChat);
-                for(let username of usersInChat){
-
-                        let userConnection = userConnections[username];
-                        console.log("trying gto get user: " + username + " user connections " + userConnections);
+                for(let userid in usersInChat){
+                        console.log(userid);
+                        let userConnection = userConnections[userid];
+                        console.log("trying gto get user: " + userid + " user connections " + userConnections);
                         if(userConnection){
                                 userConnection.emit("chatUpdate", chat);
                         }

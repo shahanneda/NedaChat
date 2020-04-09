@@ -19,7 +19,8 @@ class Chat extends Component {
                         console.log("Connected!");
                         socket.emit("NewConnection", {
                                 user:{
-                                        name:username,
+                                        id:"shahanneda93835498",
+                                        username:"shahanneda"
                                 }
                         });
                 });
@@ -33,7 +34,7 @@ class Chat extends Component {
 
         render(){
                 return(
-                        <div>
+                        <div className="container">
                                 Chat Component
                                 <MessageReceive socket={this.state.socket} username={this.props.username} /> 
 

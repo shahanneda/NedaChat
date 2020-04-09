@@ -17,15 +17,16 @@ class Message extends Component {
 
         render(){
                 return(
-                        <div className="message-wrapper">
-                                <div className="message-sender">
-                                        {this.props.author}
-                                </div>
-                                <div className="message-body">
-                                        {this.props.body}
-                                </div>
+                                <div className="message-wrapper list-group-item ">
 
-                        </div>
+                                        <div className="message-sender">
+                                                {this.props.author}
+                                        </div>
+                                        <div className="message-body">
+                                                {this.props.body}
+                                        </div>
+
+                                </div>
 
                 )
         }

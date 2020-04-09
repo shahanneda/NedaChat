@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 
-import ChatGroup from "./ChatGroup.jsx";
+import IndividualChat from "./IndividualChat.jsx";
 
 class MessageReceive extends Component{
         constructor(props){
@@ -56,7 +56,7 @@ class MessageReceive extends Component{
                         <div>
                                 {
                                         Object.keys(this.state.chats).map( key =>
-                                                <ChatGroup key= {key} chat={this.state.chats[key] } />
+                                                <IndividualChat key= {key} chat={this.state.chats[key] } />
                                         )
 
                                 }
