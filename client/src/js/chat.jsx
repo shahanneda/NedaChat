@@ -56,7 +56,7 @@ class Chat extends Component {
 
                 return(
                         <Router>
-                                <div className="container">
+                                <div className="container-fluid">
                                         <Switch>
 
                                                 <Route path="/chat">

@@ -15,14 +15,15 @@ users["shahanneda"] =
 { 
         id:"shahanneda", 
         username:"Shahan", 
-        chatsUserIsIn:["Group 1"],
+        chatsUserIsIn:["Group 1","Group 2","Group 3","Group 4","Group 5"],
 }
 
 users["sam"] = 
 { 
         id:"sam", 
         username:"sam", 
-        chatsUserIsIn:["Group 1", "Group 2"],
+        chatsUserIsIn:["Group 1","Group 2","Group 3","Group 4","Group 5"],
+
 }
 users["bob"] = 
 { 
@@ -41,10 +42,50 @@ chats["Group 1"] =
                 },
                 messages:{},
         }
-
 chats["Group 2"] =
         { 
                 id:"Group 2",
+                name:"Group 1",
+                usersInChat:{
+                        "shahanneda": users["shahanneda"],
+                        "sam": users["sam"],
+                },
+                messages:{},
+        }
+chats["Group 3"] =
+        { 
+                id:"Group 3",
+                name:"Group 1",
+                usersInChat:{
+                        "shahanneda": users["shahanneda"],
+                        "sam": users["sam"],
+                },
+                messages:{},
+        }
+chats["Group 4"] =
+        { 
+                id:"Group 4",
+                name:"Group 1",
+                usersInChat:{
+                        "shahanneda": users["shahanneda"],
+                        "sam": users["sam"],
+                },
+                messages:{},
+        }
+chats["Group 5"] =
+        { 
+                id:"Group 5",
+                name:"Group 1",
+                usersInChat:{
+                        "shahanneda": users["shahanneda"],
+                        "sam": users["sam"],
+                },
+                messages:{},
+        }
+
+chats["Group 6"] =
+        { 
+                id:"Group 6",
                 name:"Group 2",
                 usersInChat:{
                         "bob" : {
