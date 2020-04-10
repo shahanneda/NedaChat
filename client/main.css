@@ -32,6 +32,7 @@ body{
         background-color:teal;
         width: 100vw;
         height:10vh;
+        display:none;
 }
 .message-send-wrapper{
         display: flex;
