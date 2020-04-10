@@ -83,7 +83,7 @@ class MessageReceive extends Component{
                 }
                 return(
                         <div className="row p-4">
-                                <UserChatBrowser chats={this.state.chats} newChatSelected={this.newChatSelected}/>
+                                <UserChatBrowser addNewChatButton={this.props.addNewChatButton} chats={this.state.chats} newChatSelected={this.newChatSelected}/>
 
                                 <IndividualChat key= {this.state.currentChat.id} chat={this.state.currentChat } />
 

@@ -5,6 +5,7 @@ import io from 'socket.io-client/dist/socket.io';
 import MessageSend from "./MessageSend.jsx"
 import MessageReceive from "./MessageReceive.jsx"
 import Login from "./Login.jsx";
+import NewChatModal from "./NewChatModal.jsx";
 import {
         HashRouter as Router,
         Switch,
@@ -24,6 +25,7 @@ class Chat extends Component {
                         socket:null,
                         username:'undefinedUser',
                         currentChat: null,
+                        newChatModalOn:false,
                 }
 
 
@@ -56,6 +58,15 @@ class Chat extends Component {
         newChatSelected = (chat) => {
                 this.setState({currentChat:chat});        
         }
+
+        addNewChatButton = () => {
+                this.setState({newChatModalOn: true}); 
+        }
+
+        closeNewChatModal = () => {
+                this.setState({newChatModalOn: false}); 
+        }
+
         render(){
 
                 return(
@@ -64,8 +75,9 @@ class Chat extends Component {
                                         <Switch>
 
                                                 <Route path="/chat">
-                                                        <MessageReceive newChatSelected={this.newChatSelected} socket={this.state.socket} username={this.state.username} /> 
+                                                        <MessageReceive newChatSelected={this.newChatSelected} socket={this.state.socket} username={this.state.username} addNewChatButton={this.addNewChatButton}/> 
                                                         <MessageSend currentChat={this.state.currentChat} socket={this.state.socket} username={this.state.username}  />
+                                                        {this.state.newChatModalOn ? <NewChatModal socket={this.state.socket} close={this.closeNewChatModal} /> : ""}
                                                 </Route>
 
                                                 <Route path="/">

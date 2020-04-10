@@ -31,6 +31,10 @@ class UserChatBrowser extends Component{
                 return(
                         <div className="user-chat-browser-wrapper col-2">
                                 <ul className="list-group user-chat-browser-list">
+                                        <li className="list-group-item user-chat-search-wrapper">
+                                                {/*<input type="text" className=" user-chat-search-input" placeholder="Search for a chat"></input>*/}
+                                                <button className="add-new-chat-button btn btn-primary w-100 p-3" onClick={this.props.addNewChatButton}>New Chat</button> 
+                                        </li>
                                         {
                                                 Object.keys(this.props.chats).map( key =>{
                                                         let chat = this.props.chats[key];

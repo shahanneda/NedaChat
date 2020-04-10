@@ -22,14 +22,14 @@ users["sam"] =
 { 
         id:"sam", 
         username:"sam", 
-        chatsUserIsIn:["Group 1","Group 2","Group 3","Group 4","Group 5"],
+        chatsUserIsIn:["Group 1","Group 2","Group 3","Group 4","Group 5", "Group 6"],
 
 }
 users["bob"] = 
 { 
         id:"sam", 
         username:"sam", 
-        chatsUserIsIn:[ "Group 2"],
+        chatsUserIsIn:[ "Group 6"],
 }
 
 chats["Group 1"] =
