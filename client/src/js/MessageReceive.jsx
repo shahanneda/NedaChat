@@ -67,6 +67,7 @@ class MessageReceive extends Component{
 
         newChatSelected = (chat) => {
                 this.setState({currentChat:chat});        
+                this.props.newChatSelected(chat);
         }
         render(){
                 if(this.props.socket == null){

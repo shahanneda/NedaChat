@@ -45,7 +45,7 @@ chats["Group 1"] =
 chats["Group 2"] =
         { 
                 id:"Group 2",
-                name:"Group 1",
+                name:"Group 2",
                 usersInChat:{
                         "shahanneda": users["shahanneda"],
                         "sam": users["sam"],
@@ -55,7 +55,7 @@ chats["Group 2"] =
 chats["Group 3"] =
         { 
                 id:"Group 3",
-                name:"Group 1",
+                name:"Group 3",
                 usersInChat:{
                         "shahanneda": users["shahanneda"],
                         "sam": users["sam"],
@@ -65,7 +65,7 @@ chats["Group 3"] =
 chats["Group 4"] =
         { 
                 id:"Group 4",
-                name:"Group 1",
+                name:"Group 4",
                 usersInChat:{
                         "shahanneda": users["shahanneda"],
                         "sam": users["sam"],
@@ -75,7 +75,7 @@ chats["Group 4"] =
 chats["Group 5"] =
         { 
                 id:"Group 5",
-                name:"Group 1",
+                name:"Group 5",
                 usersInChat:{
                         "shahanneda": users["shahanneda"],
                         "sam": users["sam"],
@@ -86,7 +86,7 @@ chats["Group 5"] =
 chats["Group 6"] =
         { 
                 id:"Group 6",
-                name:"Group 2",
+                name:"Group 6",
                 usersInChat:{
                         "bob" : {
                                 id:"bob",
@@ -156,7 +156,7 @@ io.on('connection', function (socket) {
         });
 
         socket.on("newMessage", function(data){
-                let chat = chats[data.chatName]; // find chat using unique identifier
+                let chat = chats[data.chatId]; // find chat using unique identifier
                 chat.messages[data.id] = data; //  data is the message object 
 
                 let usersInChat = chat.usersInChat;

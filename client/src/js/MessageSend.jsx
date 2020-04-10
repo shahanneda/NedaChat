@@ -17,9 +17,12 @@ class MessageSend extends Component{
 
         handleButtonClick(){
                 console.log("sent message");
+                if(this.props.currentChat == null){
+                        return;
+                }
                 this.props.socket.emit("newMessage", {
-                        id:  Date.now() + this.props.username  + "Group1",
-                        chatName: "Group 1",
+                        id:  Date.now() + this.props.username  + this.props.currentChat.id,
+                        chatId: this.props.currentChat.id,
                         fromUserName:this.props.username,
                         messageBody: this.state.currentMessageBoxValue,
                 }); 

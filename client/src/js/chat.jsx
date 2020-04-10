@@ -23,6 +23,7 @@ class Chat extends Component {
                 this.state =  {
                         socket:null,
                         username:'undefinedUser',
+                        currentChat: null,
                 }
 
 
@@ -52,6 +53,9 @@ class Chat extends Component {
                 this.tryToConnectToSocket();
         }
 
+        newChatSelected = (chat) => {
+                this.setState({currentChat:chat});        
+        }
         render(){
 
                 return(
@@ -60,8 +64,8 @@ class Chat extends Component {
                                         <Switch>
 
                                                 <Route path="/chat">
-                                                        <MessageReceive socket={this.state.socket} username={this.state.username} /> 
-                                                        <MessageSend socket={this.state.socket} username={this.state.username}  />
+                                                        <MessageReceive newChatSelected={this.newChatSelected} socket={this.state.socket} username={this.state.username} /> 
+                                                        <MessageSend currentChat={this.state.currentChat} socket={this.state.socket} username={this.state.username}  />
                                                 </Route>
 
                                                 <Route path="/">

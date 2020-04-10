@@ -22,7 +22,9 @@ class UserChatBrowser extends Component{
         }
 
         handleListItemClicked = (chatId) =>{
-                console.log("chat id" + chatId);
+                console.log("switching to chat with chat id: " + chatId);
+                this.props.newChatSelected(this.props.chats[chatId]);
+                this.setState({chatSelected: this.props.chats[chatId]});
                 
         }
         render(){
