@@ -46,7 +46,26 @@ body{
 .input-box{
         width:100%;
 }
+.login-wrapper{
+        height:100vh;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+}
+.login-form-wrapper{
+        padding:100px;
+}
+.login-title{
+        color:#037bff;
+        text-align:center;
 
+}
+.login-submit-button-wrapper{
+        text-align:center;
+}
+.login-username-button{
+        width:80% ;
+}
 /*
  *
  *

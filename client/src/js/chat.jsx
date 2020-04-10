@@ -4,23 +4,45 @@ import io from 'socket.io-client/dist/socket.io';
 
 import MessageSend from "./MessageSend.jsx"
 import MessageReceive from "./MessageReceive.jsx"
+import Login from "./Login.jsx";
+import {
+        HashRouter as Router,
+        Switch,
+        Route,
+        Link,
+        Redirect,
+        useLocation,
+        withRouter,
 
-const username = "shahanneda"; //TEMP
+} from "react-router-dom";
+
 class Chat extends Component {
-         
+
         constructor(props){
                 super(props);
-                let socket = io.connect('http://192.168.1.22');
-
                 this.state =  {
-                        socket:socket,
+                        socket:null,
+                        username:'undefinedUser',
+                        isOnLoginPage: true,
                 }
-                socket.on("connect", function (data){
+
+
+        }
+
+        componentWillMount(){
+                console.log("tksdaf");
+                this.checkIfOnLoginPage();
+        }
+
+        tryToConnectToSocket = () => {
+
+                let socket = io.connect('http://192.168.1.22');
+                socket.on("connect", data =>{
                         console.log("Connected!");
                         socket.emit("NewConnection", {
                                 user:{
-                                        id:"shahanneda93835498",
-                                        username:"shahanneda"
+                                        id:this.state.username,
+                                        username:this.state.username
                                 }
                         });
                 });
@@ -28,19 +50,44 @@ class Chat extends Component {
                 socket.on("buttonClicked", function (data){
                         console.log("button clicked!");
                 });
+                this.setState({socket:socket});
                 console.log("chat init");
         }
-        
 
+        usernameSet = (newname) => {
+                this.setState({username:newname});
+                this.checkIfOnLoginPage();
+                this.tryToConnectToSocket();
+        }
+
+        checkIfOnLoginPage = () => {
+                console.log(window.location.hash)
+                if(window.location.hash !=="#/"){
+                        console.log("not on login page");
+                        this.setState({isOnLoginPage: false});
+                }else{
+                        this.setState({isOnLoginPage: true});
+                }
+        }
         render(){
+
                 return(
-                        <div className="container">
-                                Chat Component
-                                <MessageReceive socket={this.state.socket} username={this.props.username} /> 
+                        <Router>
+                                <div className="container">
+                                        <Switch>
 
-                                <MessageSend socket={this.state.socket} username={this.props.username}  />
+                                                <Route path="/chat">
+                                                        <MessageReceive socket={this.state.socket} username={this.state.username} /> 
+                                                        <MessageSend socket={this.state.socket} username={this.state.username}  />
+                                                </Route>
 
-                        </div>
+                                                <Route path="/">
+                                                        <Login usernameSet={this.usernameSet} />
+                                                </Route>
+                                        </Switch>
+
+                                </div>
+                        </Router>
 
                 )
         }

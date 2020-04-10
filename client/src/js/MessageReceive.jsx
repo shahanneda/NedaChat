@@ -2,14 +2,17 @@ import React, {Component} from "react";
 
 import IndividualChat from "./IndividualChat.jsx";
 
+import {Redirect} from "react-router-dom"
 class MessageReceive extends Component{
         constructor(props){
                 super(props)
-
+        
                 this.state = {
                         chats:{},
                 };
-
+                if(this.props.socket === null){
+                        return;
+                }
                 
 
 
@@ -55,6 +58,9 @@ class MessageReceive extends Component{
         messageBoxOnChange(event){
         }
         render(){
+                if(this.props.socket == null){
+                        return(<Redirect to="/"/ >);
+                }
                 return(
                         <div>
                                 {
