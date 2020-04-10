@@ -34,6 +34,7 @@ users["bob"] =
 chats["Group 1"] =
         { 
                 id:"Group 1",
+                name:"Group 1",
                 usersInChat:{
                         "shahanneda": users["shahanneda"],
                         "sam": users["sam"],
@@ -43,6 +44,7 @@ chats["Group 1"] =
 
 chats["Group 2"] =
         { 
+                id:"Group 2",
                 name:"Group 2",
                 usersInChat:{
                         "bob" : {
