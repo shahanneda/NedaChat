@@ -22,7 +22,6 @@ class MessageSend extends Component{
                         chatName: "Group 1",
                         fromUserName:this.props.username,
                         messageBody: this.state.currentMessageBoxValue,
-
                 }); 
         }
         keyPress = (e) => {

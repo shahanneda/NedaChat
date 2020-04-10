@@ -10,38 +10,53 @@ let chats = {};
 
 let userConnections = {};
 
+let users = {};
+users["shahanneda"] = 
+{ 
+        id:"shahanneda", 
+        username:"Shahan", 
+        chatsUserIsIn:["Group 1"],
+}
+
+users["sam"] = 
+{ 
+        id:"sam", 
+        username:"sam", 
+        chatsUserIsIn:["Group 1", "Group 2"],
+}
+users["bob"] = 
+{ 
+        id:"sam", 
+        username:"sam", 
+        chatsUserIsIn:[ "Group 2"],
+}
+
 chats["Group 1"] =
         { 
-                name:"Group 1",
+                id:"Group 1",
                 usersInChat:{
-                        "shahanneda93835498" : {
-                                id:"shahanneda",
-                                username:"Shahan",
+                        "shahanneda": users["shahanneda"],
+                        "sam": users["sam"],
+                },
+                messages:{},
+        }
+
+chats["Group 2"] =
+        { 
+                name:"Group 2",
+                usersInChat:{
+                        "bob" : {
+                                id:"bob",
+                                username:"bob",
                         },
-                        "samdrubseky435325":{
+                        "sam":{
                                 id:"sam",
                                 username:"Sam",
                         }
                 },
                 messages:{},
         }
-
-/*chats["Group 2"] =
-        { 
-                name:"Group 2",
-                usersInChat:{
-                        "shahanneda93835498" : {
-                                id:"shahanneda93835498",
-                                username:"Shahan",
-                        },
-                        "samdrubseky435325":{
-                                id:"samdrubseky435325",
-                                username:"Sam",
-                        }
-                },
-                messages:{},
-        }
-        */
+        
 server.listen(80);
 console.log("NedaChat Server Started!");
 
@@ -49,20 +64,10 @@ console.log("NedaChat Server Started!");
 // Add headers
 app.use(function (req, res, next) {
 
-        // Website you wish to allow to connect
         res.setHeader('Access-Control-Allow-Origin', '*');
-
-        // Request methods you wish to allow
         res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-
-        // Request headers you wish to allow
         res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-
-        // Set to true if you need the website to include cookies in the requests sent
-        // to the API (e.g. in case you use sessions)
         res.setHeader('Access-Control-Allow-Credentials', true);
-
-        // Pass to next layer of middleware
         next();
 });
 app.get('/', function (req, res) {
@@ -70,13 +75,22 @@ app.get('/', function (req, res) {
 });
 app.use(express.static(path.join(__dirname + '/../client/')));
 
-app.get('/getChats', function(req,res){
+app.get('/getChats/:userid', function(req,res){
         console.log("apiEndpoint: getchats triggered");
-        let storedChats = chats;
-        console.log(storedChats);
-        let jsonChats = JSON.stringify(storedChats);
-        console.log(jsonChats);
-        res.send(jsonChats);
+        let userid = req.params.userid; 
+        let storedChats = {};
+        let user = users[userid];
+
+        if(user){
+                for(let chatId of user.chatsUserIsIn){
+                        storedChats[chatId] = chats[chatId];
+                }
+                let jsonChats = JSON.stringify(storedChats);
+                res.send(jsonChats);
+        }else{
+                res.send({});
+        }
+
 });
 
 

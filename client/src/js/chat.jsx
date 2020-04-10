@@ -23,19 +23,12 @@ class Chat extends Component {
                 this.state =  {
                         socket:null,
                         username:'undefinedUser',
-                        isOnLoginPage: true,
                 }
 
 
         }
 
-        componentWillMount(){
-                console.log("tksdaf");
-                this.checkIfOnLoginPage();
-        }
-
         tryToConnectToSocket = () => {
-
                 let socket = io.connect('http://192.168.1.22');
                 socket.on("connect", data =>{
                         console.log("Connected!");
@@ -56,19 +49,9 @@ class Chat extends Component {
 
         usernameSet = (newname) => {
                 this.setState({username:newname});
-                this.checkIfOnLoginPage();
                 this.tryToConnectToSocket();
         }
 
-        checkIfOnLoginPage = () => {
-                console.log(window.location.hash)
-                if(window.location.hash !=="#/"){
-                        console.log("not on login page");
-                        this.setState({isOnLoginPage: false});
-                }else{
-                        this.setState({isOnLoginPage: true});
-                }
-        }
         render(){
 
                 return(
