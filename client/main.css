@@ -40,7 +40,12 @@ body{
         height:100%;
 }
 
-
+.message-input-box-wrapper {
+    width: 50vw;
+}
+.input-box{
+        width:100%;
+}
 
 /*
  *
