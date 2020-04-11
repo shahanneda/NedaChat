@@ -216,12 +216,29 @@ io.on('connection', function (socket) {
 
         socket.on("createChat", function(data){
                 let newChat = {
+                        id:data.id,
                         name:data.name,
                         usersInChat: data.usersInChat,
                         messages: {},
                 };
+                Object.keys(data.usersInChat).map( (userid) => {
+                        users[userid].chatsUserIsIn.push( data.id);
 
-                chats += newChat;
+                        let userConnectionsForId = userConnections[userid];
+                        if(userConnectionsForId){ //  we have to check whether user is actually in chat or not
+
+                                userConnectionsForId.map( userConnection => { // map through all of the clients of the user, the same id could have multiple sessions
+                                        if(userConnection){
+                                                userConnection.emit("chatUpdate", newChat);
+                                                console.log("sending message to " + userid );
+                                        }
+                                });
+                        }
+
+                });
+                console.log("creating chat!");
+                console.log(newChat);
+                chats[newChat.id] = newChat;
         });
 
 });

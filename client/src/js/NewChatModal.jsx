@@ -15,7 +15,7 @@ class NewChatModal extends Component{
 
                 this.state = {
                         usersToAddInChat:"",
-                        chatName:"",
+                        chatName:"Chat",
                         chatNameEdited:false,
                         suggestions:[],
                         valueOfAddPersonField: "",
@@ -37,7 +37,6 @@ class NewChatModal extends Component{
         }
 
         getSuggestionValue = (suggestion) => {
-                this.addNewUserToChat(suggestion);
                 return suggestion;
         }
 
@@ -51,7 +50,7 @@ class NewChatModal extends Component{
                         //let chatNameEndString = ""; //for group chats
 
                         if(usersAlreadyInChat.length == 2){
-                                chatName =  userid;
+                                chatName =  userid + " and " + this.props.selfUserId +"'s chat" ;
                         }
                         else if (usersAlreadyInChat.length !=1){
 
@@ -64,7 +63,11 @@ class NewChatModal extends Component{
                         }
 
                         this.setState({usersAlreadyInChat: usersAlreadyInChat, valueOfAddPersonField: "", chatName:(!this.state.chatNameEdited ? chatName : this.state.chatName)});
+                }else{
+                        $("div[userid=" + userid  + "]").fadeOut(500).fadeIn(500);
+                        
                 }
+
                 this.setState({valueOfAddPersonField: ""});
 
         }
@@ -106,9 +109,13 @@ class NewChatModal extends Component{
                                         console.log("Error in gettin chats");
                                 }
                         )
+
         };
 
-        // Autosuggest will call this function every time you need to clear suggestions.
+        onSuggestionSelected = (event, {suggestion}) => {
+                this.addNewUserToChat(suggestion);
+        }
+
         onSuggestionsClearRequested = () => {
                 this.setState({
                         suggestions: []
@@ -129,7 +136,23 @@ class NewChatModal extends Component{
                         if(this.state.suggestions.indexOf(this.state.valueOfAddPersonField) != -1){// check if the username typed is indeed a valid username
                                 this.addNewUserToChat(this.state.valueOfAddPersonField);
                         }
+                        this.setState({valueOfAddPersonField: ""});
                 }
+        }
+        createChatButtonClicked = () => {
+                let usersInChatObject ={};
+                this.state.usersAlreadyInChat.map( (userid) =>{
+                        usersInChatObject[userid] = userid;
+                });
+                
+                console.log(usersInChatObject);
+                this.props.socket.emit("createChat", {
+                        id: Date.now() + this.state.chatName,
+                        name: this.state.chatName,
+                        usersInChat:usersInChatObject,
+                });
+                this.props.close();
+                $(this.modal).modal("hide");
         }
         render(){
                 const { valueOfAddPersonField, suggestions } = this.state;
@@ -164,7 +187,10 @@ class NewChatModal extends Component{
                                                                                 onSuggestionsClearRequested={this.onSuggestionsClearRequested}
                                                                                 getSuggestionValue={this.getSuggestionValue}
                                                                                 renderSuggestion={renderSuggestion}
-                                                                                inputProps={inputProps} onKeyDown={this.handleUserInputOnKeyDown}
+                                                                                inputProps={inputProps} 
+                                                                                onKeyDown={this.handleUserInputOnKeyDown}
+                                                                                onSuggestionSelected={this.onSuggestionSelected}
+
                                                                         />
 
                                                                 </div>
@@ -173,7 +199,7 @@ class NewChatModal extends Component{
                                                                         { 
                                                                                 this.state.usersAlreadyInChat.map( (userid) => {
 
-                                                                                        return(<div className="user-chip" key={userid}>
+                                                                                        return(<div className="user-chip" userid={userid} key={userid}>
                                                                                                 {userid}
                                                                                                 {this.props.selfUserId == userid ? "":<span onClick={() => this.removeUserAdded(userid)} className="user-chip-close-btn">&times;</span>}
                                                                                         </div>);
@@ -190,7 +216,7 @@ class NewChatModal extends Component{
 
                                                         </form>
                                                         <div className="modal-footer">
-                                                                <button type="button" className="btn btn-primary">Create Chat</button>
+                                                                <button type="button" onClick={this.createChatButtonClicked} className="btn btn-primary">Create Chat</button>
                                                         </div>
                                                 </div>                                                
                                         </div>
