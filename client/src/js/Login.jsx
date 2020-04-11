@@ -15,11 +15,12 @@ class Login extends Component {
 
         formSubmit = (event) =>{
                 event.preventDefault();
-                this.props.usernameSet(this.state.usernameField ); 
+                this.props.usernameSet(this.state.usernameField.toLowerCase() ); 
                 this.setState({loginComplete:true});
 
         }
         usernameOnChange = (event) =>{
+
                 this.setState({usernameField: event.target.value});
         }
         render(){
@@ -33,7 +34,7 @@ class Login extends Component {
 
 
                                         <div className="card-body">
-                                                <div className="card-title login-title display-1 font-weight-bold font-italic">
+                                                <div className="card-title login-title  font-weight-bold font-italic">
                                                         NedaChat
                                                 </div>
                                                 <div className="card-text login-form-wrapper">

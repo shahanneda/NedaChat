@@ -7,26 +7,26 @@ import MessageReceive from "./MessageReceive.jsx"
 
 const username = "shahanneda"; //TEMP
 class Message extends Component {
-         
+
         constructor(props){
                 super(props);
                 this.state =  {
                 }
         }
-        
+
 
         render(){
                 return(
-                                <div className="message-wrapper list-group-item ">
+                        <div className={ "message-wrapper list-group-item " + (this.props.isSelfMessage ? "message-wrapper-author" : "")}> 
 
-                                        <div className="message-sender">
-                                                {this.props.author}
-                                        </div>
-                                        <div className="message-body">
-                                                {this.props.body}
-                                        </div>
-
+                                <div className="message-sender">
+                                        {this.props.author}
                                 </div>
+                                <div className="message-body">
+                                        {this.props.body}
+                                </div>
+
+                        </div>
 
                 )
         }

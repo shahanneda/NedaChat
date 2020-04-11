@@ -2,16 +2,19 @@ body{
         background-color: light-blue;
 }
 
-.message-wrapper{
+.message-wrapper {
         border-radius: 21rem !important;
         background-color: #e0fffe;
-        margin-top: 15px;
-        max-width: 47%;
+        margin-top: 11px;
+        max-width: 31%;
         left: 25%;
-
+        width: fit-content;
 }
+
 .message-wrapper-author{
-        left:50%; 
+        left: -25%;
+        margin-left: auto;
+        background-color: #c6ffda;
 }
 .message-sender {
         color: darkblue;
@@ -56,6 +59,9 @@ body{
         padding:100px;
 }
 .login-title{
+        font-size: 4.5rem;
+        font-weight: 300;
+        line-height: 1.2;
         color:#037bff;
         text-align:center;
 
@@ -141,22 +147,57 @@ button, input {
         font-size: 16px;
         line-height: 50px;
         border-radius: 25px;
-        background-color: #f1f1f1;
-            margin: 2.5px;
+        background-color: #007bff;
+        color:white; 
+        margin: 2.5px;
 }
 
 .user-chip-close-btn{
         padding-left: 10px;
-        color: #888;
+        color: white;
         font-weight: bold;
         float: right;
         font-size: 20px;
         cursor: pointer;
 }
+.user-chip-close-btn:hover{
+        color: #6afcfd;
+}
 
 .user-chat-browser-list {
-    overflow: scroll;
+        overflow: scroll;
 }
+
+
+.mobile-hidden{
+        display:none;
+
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+        .login-title{
+                font-size: 4.5rem;
+        }
+
+
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {  
+        .login-title{
+                font-size: 6rem;
+        }
+        .mobile-hidden{
+                display: flex;
+        }
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+
+}
+
 /*
  *
  *

@@ -11,14 +11,15 @@ class IndividualChat extends Component{
 
         render(){
                 return(
-                        <div className="card col-10">
+                        <div className={"card col-sm-12 col-md-10 individual-chat-wrapper" + (this.props.mobileIsOnChatMenu ? "" : " mobile-hidden")}>
                                 <div className="card-body">
                                         <h1 className="display-3 text-primary chat-title"> {this.props.chat.name} </h1>
                                         <div className="list-group chat-body">
                                                 {
-                                                        Object.keys(this.props.chat.messages).map(  key => {
+                                                       Object.keys(this.props.chat.messages).map(  key => {
                                                                 let message = this.props.chat.messages[key]
-                                                                return <Message key={message.id} author={message.fromUserName} body={message.messageBody} />;
+                                                               console.log(this.props.username  + " " + message.fromUserName);
+                                                               return <Message key={message.id} author={message.fromUserName} isSelfMessage={message.fromUserName ===   this.props.username} body={message.messageBody} />;
                                                         })
                                                 }
 
@@ -39,7 +40,7 @@ class IndividualChat extends Component{
                 this.scrollToBottom();
         }
         scrollToBottom = () => {
-                this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+              //  this.messagesEnd.scrollIntoView({ behavior: "smooth" });
         }
 
 }

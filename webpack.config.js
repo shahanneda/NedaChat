@@ -1,7 +1,7 @@
 var path = require('path') // this is so we have path so we can set the output path
 module.exports = {
         mode: 'development',
-        entry:{
+        entry:
                 main: "./client/src/js/main.jsx",
         },
         output:{

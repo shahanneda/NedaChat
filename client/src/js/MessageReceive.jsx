@@ -11,6 +11,7 @@ class MessageReceive extends Component{
                 this.state = {
                         chats:{},
                         currentChat:null,
+                        mobileIsOnChatMenu: false,
                 };
                 if(this.props.socket === null){
                         return;
@@ -71,8 +72,12 @@ class MessageReceive extends Component{
         }
 
         newChatSelected = (chat) => {
+
                 this.setState({currentChat:chat});        
                 this.props.newChatSelected(chat);
+        }
+        menuButtonClicked = () => {
+                this.setState({mobileIsOnChatMenu: !this.state.mobileIsOnChatMenu});        
         }
         render(){
                 if(this.props.socket == null){
@@ -81,16 +86,18 @@ class MessageReceive extends Component{
                 if(this.state.currentChat == null){
                         return(
                                 <div>
-                                        <UserChatBrowser addNewChatButton={this.props.addNewChatButton} chats={this.state.chats} newChatSelected={this.newChatSelected}/>
+                                        <UserChatBrowser addNewChatButton={this.props.addNewChatButton} chats={this.state.chats} newChatSelected={this.newChatSelected} mobileIsOnChatMenu={this.state.mobileIsOnChatMenu}/>
                                         "No Chats!"
                                 </div>
                         );
                 }
                 return(
                         <div className="row p-4">
-                                <UserChatBrowser addNewChatButton={this.props.addNewChatButton} chats={this.state.chats} newChatSelected={this.newChatSelected}/>
+                                <div className="sideMenuButton btn" style={{display:"fixed", right:0 +"px", top:0+"px", position:"absolute"}} onClick={this.menuButtonClicked}> Menu </div>
 
-                                <IndividualChat key= {this.state.currentChat.id} chat={this.state.currentChat } />
+                                <UserChatBrowser addNewChatButton={this.props.addNewChatButton} chats={this.state.chats} newChatSelected={this.newChatSelected} mobileIsOnChatMenu={this.state.mobileIsOnChatMenu}/>
+
+                                <IndividualChat key= {this.state.currentChat.id} chat={this.state.currentChat } username={this.props.username} mobileIsOnChatMenu={this.state.mobileIsOnChatMenu}/>
 
                         </div>
 
