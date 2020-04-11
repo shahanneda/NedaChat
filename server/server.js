@@ -27,8 +27,8 @@ users["sam"] =
 }
 users["bob"] = 
 { 
-        id:"sam", 
-        username:"sam", 
+        id:"bob", 
+        username:"bob", 
         chatsUserIsIn:[ "Group 6"],
 }
 
@@ -135,6 +135,21 @@ app.get('/getChats/:userid', function(req,res){
         }
 
 });
+app.get('/searchForUser/:username', function(req,res){
+        let username = req.params.username;
+        username = username.toLowerCase();
+        let usersToSend = {};
+        console.log(users);
+        for(let userid of Object.keys(users)){
+                console.log(userid);
+                if(userid.indexOf(username) != -1){
+                      usersToSend[userid] = users[userid].username;  
+                }
+        }
+        console.log(usersToSend);
+        res.send(JSON.stringify(usersToSend));
+
+});
 
 
 io.on('connection', function (socket) {
@@ -144,15 +159,23 @@ io.on('connection', function (socket) {
         });
 
         socket.on("NewConnection", function(data){
-                io.emit("newUser", data);
                 if(userConnections[data.user.id]){
                         console.log("Found other user client id, appending");
                         userConnections[data.user.id].push(socket);
                 }else{
                         userConnections[data.user.id]  = [socket];  
                 }
-
-                console.log("New User Connected: name: " + data.user.name);
+                
+                if(!(data.user.id in users)){
+                        users[data.user.id] = {
+                                id: data.user.id,
+                                username:data.user.id,
+                                chatsUserIsIn:[],
+                        };
+                        console.log("new user created: " + data.user.id); 
+                }
+                console.log(users[data.user.id]);
+                console.log("New User Connected: name: " + data.user.id);
         });
 
         socket.on("newMessage", function(data){

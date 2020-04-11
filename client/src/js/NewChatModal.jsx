@@ -60,9 +60,25 @@ class NewChatModal extends Component{
         // Autosuggest will call this function every time you need to update suggestions.
         // You already implemented this logic above, so just use it.
         onSuggestionsFetchRequested = ({ value }) => {
-                this.setState({
-                        suggestions: ["shahan", "sam"]
-                });
+                  
+                fetch("http://192.168.1.22/searchForUser/"+ value)
+                        .then(res => res.json())
+                        .then(
+                                (result) => {
+                                        let newSuggestions = [];
+                                        for(let user of Object.keys(result)){
+                                                newSuggestions.push(result[user]); 
+                                        }
+                                        console.log(newSuggestions);
+                                        this.setState({
+                                                suggestions: newSuggestions
+                                        });
+                                },
+                                // Note: it's important to handle errors here
+                                (error) => {
+                                        console.log("Error in gettin chats");
+                                }
+                        )
         };
 
         // Autosuggest will call this function every time you need to clear suggestions.
