@@ -39,7 +39,9 @@ class UserChatBrowser extends Component{
                                                 Object.keys(this.props.chats).map( key =>{
                                                         let chat = this.props.chats[key];
                                                         return(
-                                                                <li onClick={ () => this.handleListItemClicked(chat.id)} key={chat.id} className={"list-group-item user-chat-browser-list-item" + (this.state.chatSelected.id == chat.id ? " active" : "" )}  >{chat.name} </li>
+                                                                <li onClick={ () => this.handleListItemClicked(chat.id)} key={chat.id} className={"list-group-item user-chat-browser-list-item" + (
+                                                                        (this.state.chatSelected != null) ? (this.state.chatSelected.id == chat.id ? " active" : "") : ""
+                                                                )}  >{chat.name} </li>
 
                                                         );
                                                 })

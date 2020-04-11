@@ -33,15 +33,16 @@ class MessageReceive extends Component{
                         let chat = data;
                         let localChats = this.state.chats;
                         localChats[chat.id] = chat;
-
-                        let currentChatUpdated = localChats[this.state.currentChat.id];
+                        if(this.state.currentChat != null){
+                                let currentChatUpdated = localChats[this.state.currentChat.id];
+                                this.setState({ currentChat:currentChatUpdated});
+                        }
 
                         this.setState( { chats: localChats} );
-                        this.setState({ currentChat:currentChatUpdated});
                         console.log("Recieved chat update");
                 });
                 this.props.socket.on("addedToNewChat", data => {
-                        
+
                 });
 
                 //this.props.socket.on("
