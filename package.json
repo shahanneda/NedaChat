@@ -13,6 +13,7 @@
     "express": "^4.17.1",
     "express-static": "^1.2.6",
     "react": "^16.13.1",
+    "react-autosuggest": "^10.0.0",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.1.2",
     "socket.io": "^2.3.0",

@@ -76,7 +76,7 @@ class MessageReceive extends Component{
                 if(this.state.currentChat == null){
                         return(
                                 <div>
-                                        <UserChatBrowser chats={this.state.chats} newChatSelected={this.newChatSelected}/>
+                                        <UserChatBrowser addNewChatButton={this.props.addNewChatButton} chats={this.state.chats} newChatSelected={this.newChatSelected}/>
                                         "No Chats!"
                                 </div>
                         );
