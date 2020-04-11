@@ -16,8 +16,12 @@ class NewChatModal extends Component{
                 this.state = {
                         usersToAddInChat:"",
                         chatName:"",
+                        chatNameEdited:false,
                         suggestions:[],
-                        value: '',
+                        valueOfAddPersonField: "",
+                        usersAlreadyInChat:[this.props.selfUserId]
+
+
 
                 };
 
@@ -32,35 +36,59 @@ class NewChatModal extends Component{
 
         }
 
-        getSuggestionValue = suggestion => suggestion;
+        getSuggestionValue = (suggestion) => {
+                this.addNewUserToChat(suggestion);
+                return suggestion;
+        }
 
-        getSuggestions = value => {
-                const inputValue = value.trim().toLowerCase();
-                const inputLength = inputValue.length;
+        addNewUserToChat = (userid) => {
+                let usersAlreadyInChat = this.state.usersAlreadyInChat;
 
-                return inputLength === 0 ? [] : languages.filter(lang =>
-                        lang.name.toLowerCase().slice(0, inputLength) === inputValue
-                );
-        };
+                if(usersAlreadyInChat.indexOf(userid) == -1){ // check if user is already in chat
+                        usersAlreadyInChat.push(userid); 
+
+                        let chatName = "";
+                        //let chatNameEndString = ""; //for group chats
+
+                        if(usersAlreadyInChat.length == 2){
+                                chatName =  userid;
+                        }
+                        else if (usersAlreadyInChat.length !=1){
+
+                        /*        if (usersAlreadyInChat.length ==4){
+                                        chatNameEndString = usersAlreadyInChat[2] + ", " + usersAlreadyInChat[3]; 
+                                }else{
+                                        chatNameEndString = usersAlreadyInChat[2] + ", " + usersAlreadyInChat[3] + " and others"; 
+                                }*/
+                                chatName = "Group Chat " ;
+                        }
+
+                        this.setState({usersAlreadyInChat: usersAlreadyInChat, valueOfAddPersonField: "", chatName:(!this.state.chatNameEdited ? chatName : this.state.chatName)});
+                }
+                this.setState({valueOfAddPersonField: ""});
+
+        }
+
+
         handleUsersToAddInChat = (event) =>{
                 this.setState({usersToAddInChat: event.target.value});
         }
 
         handleChatName = (event) =>{
-                this.setState({chatName: event.target.value});
+                this.setState({chatName: event.target.value, chatNameEdited:true});
         }
 
 
-        onChange = (event, { newValue }) => {
+        onAddPersonFieldChange = (event, { newValue }) => {
                 this.setState({
-                        value: newValue
+                        valueOfAddPersonField: newValue
                 });
         };
 
         // Autosuggest will call this function every time you need to update suggestions.
         // You already implemented this logic above, so just use it.
         onSuggestionsFetchRequested = ({ value }) => {
-                  
+
                 fetch("http://192.168.1.22/searchForUser/"+ value)
                         .then(res => res.json())
                         .then(
@@ -69,7 +97,6 @@ class NewChatModal extends Component{
                                         for(let user of Object.keys(result)){
                                                 newSuggestions.push(result[user]); 
                                         }
-                                        console.log(newSuggestions);
                                         this.setState({
                                                 suggestions: newSuggestions
                                         });
@@ -88,13 +115,31 @@ class NewChatModal extends Component{
                 });
         };
 
+        removeUserAdded = (userid) => {
+                if(this.props.selfUserId == userid){
+                        return;
+                }
+                let usersAlreadyInChat = this.state.usersAlreadyInChat;
+                usersAlreadyInChat.splice(usersAlreadyInChat.indexOf(userid), 1);
+                this.setState({usersAlreadyInChat:usersAlreadyInChat});
+        }
+
+        handleUserInputOnKeyDown = (event) => {
+                if(event.key === "Enter"){
+                        if(this.state.suggestions.indexOf(this.state.valueOfAddPersonField) != -1){// check if the username typed is indeed a valid username
+                                this.addNewUserToChat(this.state.valueOfAddPersonField);
+                        }
+                }
+        }
         render(){
-                const { value, suggestions } = this.state;
-                // Autosuggest will pass through all these props to the input.
+                const { valueOfAddPersonField, suggestions } = this.state;
+                let value = valueOfAddPersonField;
                 const inputProps = {
-                        placeholder: 'Type a programming language',
+                        placeholder: 'Type a username to add to this chat',
                         value,
-                        onChange: this.onChange
+                        onChange: this.onAddPersonFieldChange,
+                        onKeyDown: this.handleUserInputOnKeyDown
+
                 };
                 return(
                         <div className="modal " tabIndex="1" role="dialog" ref={modal=> this.modal = modal}>
@@ -119,10 +164,24 @@ class NewChatModal extends Component{
                                                                                 onSuggestionsClearRequested={this.onSuggestionsClearRequested}
                                                                                 getSuggestionValue={this.getSuggestionValue}
                                                                                 renderSuggestion={renderSuggestion}
-                                                                                inputProps={inputProps}
+                                                                                inputProps={inputProps} onKeyDown={this.handleUserInputOnKeyDown}
                                                                         />
 
                                                                 </div>
+
+                                                                <div className="usersAddedToChat">
+                                                                        { 
+                                                                                this.state.usersAlreadyInChat.map( (userid) => {
+
+                                                                                        return(<div className="user-chip" key={userid}>
+                                                                                                {userid}
+                                                                                                {this.props.selfUserId == userid ? "":<span onClick={() => this.removeUserAdded(userid)} className="user-chip-close-btn">&times;</span>}
+                                                                                        </div>);
+                                                                                })
+
+                                                                        }
+                                                                </div>
+
 
                                                                 <div className="form-group">
                                                                         <label htmlFor="chat-name" className="col-form-label">Chat name</label> 

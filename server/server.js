@@ -14,7 +14,7 @@ let users = {};
 users["shahanneda"] = 
 { 
         id:"shahanneda", 
-        username:"Shahan", 
+        username:"shahanneda", 
         chatsUserIsIn:["Group 1","Group 2","Group 3","Group 4","Group 5"],
 }
 

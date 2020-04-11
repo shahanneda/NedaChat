@@ -77,7 +77,7 @@ class Chat extends Component {
                                                 <Route path="/chat">
                                                         <MessageReceive newChatSelected={this.newChatSelected} socket={this.state.socket} username={this.state.username} addNewChatButton={this.addNewChatButton}/> 
                                                         <MessageSend currentChat={this.state.currentChat} socket={this.state.socket} username={this.state.username}  />
-                                                        {this.state.newChatModalOn ? <NewChatModal socket={this.state.socket} close={this.closeNewChatModal} /> : ""}
+                                                        {this.state.newChatModalOn ? <NewChatModal selfUserId={this.state.username} socket={this.state.socket} close={this.closeNewChatModal} /> : ""}
                                                 </Route>
 
                                                 <Route path="/">
