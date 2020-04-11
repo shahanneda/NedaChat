@@ -6,7 +6,7 @@ body{
         border-radius: 21rem !important;
         background-color: #e0fffe;
         margin-top: 11px;
-        max-width: 31%;
+        max-width: 76%;
         left: 25%;
         width: fit-content;
 }
@@ -22,6 +22,7 @@ body{
 
 .chat-title{
         text-align: center;
+        font-size:1.8rem;
 }
 .chat-body{
         height:70vh;
@@ -165,13 +166,39 @@ button, input {
 }
 
 .user-chat-browser-list {
+
         overflow: scroll;
+        /* make this not mobail alter on*/
+        position: fixed;
+        top: 10px;
+        left: 0px;
+        z-index: 100;
+        width: 100vw;
 }
 
 
-.mobile-hidden{
-        display:none;
 
+@keyframes fade_out_show {
+        0% {
+                opacity: 1;
+        }
+
+        100% {
+                opacity: 0;
+                display:none !important;
+        }
+}
+
+@keyframes fade_in_show {
+        0% {
+                display:none;
+                opacity: 0;
+        }
+        100% {
+                opacity: 1;
+                display:flex !important;
+
+        }
 }
 
 /* Small devices (tablets, 768px and up) */
@@ -182,14 +209,47 @@ button, input {
 
 
 }
+@media(max-width: 992px){
 
+        .mobile-hidden{
+                display:none;
+        }
+        .mobile-not-hidden{
+                animation: fade_in_show 1.0s forwards;
+        }
+
+        .sideMenuButton{
+                display:fixed;
+                right:0px;
+                top:0px;
+                position:absolute;
+                z-index: 9999
+        }
+
+}
 /* Medium devices (desktops, 992px and up) */
 @media (min-width: 992px) {  
+        .sideMenuButton{
+                display:none;
+        }
+        .chat-browser-list{
+                display:relative;
+        }
         .login-title{
                 font-size: 6rem;
         }
         .mobile-hidden{
-                display: flex;
+                display: flex !important;
+
+        }
+
+        .mobile-not-hidden{
+                display: flex !important;
+
+        }
+
+        .chat-title{
+                font-size: 4.5rem;
         }
 }
 

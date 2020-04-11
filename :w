@@ -80,14 +80,14 @@ class MessageReceive extends Component{
         menuButtonClicked = () => {
                 let chatMenuOn = !this.state.mobileIsOnChatMenu;
                 this.setState({mobileIsOnChatMenu: !this.state.mobileIsOnChatMenu});        
-                /*
                 if(chatMenuOn){
-                        $('.user-chat-browser-wrapper').hide('slide', {direction: 'up'}, 100);
-                        $('.individual-chat-wrapper').show('slide', {direction: 'up'}, 100);
+                    $('.user-chat-browser-wrapper').hide('slide', {direction: 'left'}, 1400);
+                    $(this).next('.website-info').stop().show('slide', {direction: 'left'}, 1400);
                 }else{
-                        $('.user-chat-browser-wrapper').show('slide', {direction: 'up'}, 100);
-                        $('.individual-chat-wrapper').hide('slide', {direction: 'up'}, 100);
-                }*/
+                    $('.website-info').hide('slide', {direction: 'left'}, 1400);
+                    $(this).next('.website-info').stop().show('slide', {direction: 'left'}, 1400);
+                }
+ 
         }
         render(){
                 if(this.props.socket == null){
@@ -103,7 +103,7 @@ class MessageReceive extends Component{
                 }
                 return(
                         <div className="row p-4">
-                                <div className="sideMenuButton btn"  onClick={this.menuButtonClicked}> Menu </div>
+                                <div className="sideMenuButton btn" style={{display:"fixed", right:0 +"px", top:0+"px", position:"absolute"}} onClick={this.menuButtonClicked}> Menu </div>
 
                                 <UserChatBrowser addNewChatButton={this.props.addNewChatButton} chats={this.state.chats} newChatSelected={this.newChatSelected} mobileIsOnChatMenu={this.state.mobileIsOnChatMenu}/>
 

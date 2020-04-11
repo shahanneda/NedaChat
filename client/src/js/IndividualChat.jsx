@@ -11,7 +11,7 @@ class IndividualChat extends Component{
 
         render(){
                 return(
-                        <div className={"card col-sm-12 col-md-10 individual-chat-wrapper" + (this.props.mobileIsOnChatMenu ? "" : " mobile-hidden")}>
+                        <div className={"card col-sm-12 col-md-10 individual-chat-wrapper " + (this.props.mobileIsOnChatMenu ? "mobile-not-hidden" : " mobile-hidden")}>
                                 <div className="card-body">
                                         <h1 className="display-3 text-primary chat-title"> {this.props.chat.name} </h1>
                                         <div className="list-group chat-body">
