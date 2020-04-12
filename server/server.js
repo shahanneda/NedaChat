@@ -94,11 +94,8 @@ users["bob"] =
                 let userid = req.params.userid; 
                 usersCollection.findOne({_id: userid}, (err, user) => {
                         if(user != null){
-
-                                console.log(user.chatsUserIsIn);
                                 chatsCollection.find({_id:{"$in": user.chatsUserIsIn}}, (err,result) =>{
                                         result.toArray( (err, arrayOfChats) =>{
-                                                console.log(arrayOfChats);
                                                 let chatsObject ={};
                                                 arrayOfChats.map( chat =>{
                                                         chatsObject[chat.id] = chat;
@@ -116,15 +113,15 @@ users["bob"] =
         app.get('/searchForUser/:username', function(req,res){
                 let username = req.params.username;
                 username = username.toLowerCase();
-                let usersToSend = {};
                 usersCollection.find({}).toArray( (err,result) =>{
+                        let usersToSend = {};
                         console.log("all users:");
                         console.log(result);
                         result.map( user => {
                                 let userid = user.id;
                                 console.log("userid " + userid);
                                 if(userid.indexOf(username) != -1){
-                                        usersToSend[userid] = users[userid].username;  
+                                        usersToSend[userid] =  user;  
                                 }
                         });
                         res.send(JSON.stringify(usersToSend));
@@ -248,7 +245,7 @@ users["bob"] =
                 });
 
                 socket.on("editChat", function(data){
-                        let oldChat = chatsCollection.findOne({_id: data.id}, (err,result) =>{
+                        chatsCollection.findOne({_id: data.id}, (err,oldChat) =>{
 
 
                                 let newChat = {
@@ -261,6 +258,13 @@ users["bob"] =
                                 Object.keys(data.usersInChat).map( (userid) => {
                                         //users[userid].chatsUserIsIn(data.id); we do not need to change that since the chat id never changed!
 
+                                        usersCollection.findOne({_id: userid}, (err,result) =>{ // check if user does not know they are in chat and tell them
+                                               if(result.chatsUserIsIn.indexOf(data.id) == -1){
+                                                        result.chatsUserIsIn.push(data.id);
+                                                       usersCollection.update({_id: userid}, result, {upsert: false});
+                                               }
+
+                                        });
                                         let userConnectionsForId = userConnections[userid];
                                         if(userConnectionsForId){ //  we have to check whether user is actually in chat or not
 
