@@ -13,6 +13,7 @@
     "express": "^4.17.1",
     "express-static": "^1.2.6",
     "external-ip": "^2.1.1",
+    "mongodb": "^3.5.5",
     "react": "^16.13.1",
     "react-autosuggest": "^10.0.0",
     "react-dom": "^16.13.1",
