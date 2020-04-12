@@ -200,11 +200,12 @@ io.on('connection', function (socket) {
                 let newChat = {
                         id:data.id,
                         name:data.name,
-                        usersInChat: data.usersInChat,
+                        usersInChat: data.usersInChat,// to make this more secure make sure no users are being removed
                         messages: chats[data.id].messages ,
                 };
+
                 Object.keys(data.usersInChat).map( (userid) => {
-                        users[userid].chatsUserIsIn.push( data.id);
+                        //users[userid].chatsUserIsIn(data.id); we do not need to change that since the chat id never changed!
 
                         let userConnectionsForId = userConnections[userid];
                         if(userConnectionsForId){ //  we have to check whether user is actually in chat or not
@@ -228,14 +229,19 @@ io.on('connection', function (socket) {
                 let userId = data.userId;
                 console.log("leave chat: " + chatId + " for user: " + userId);
 
+                                console.log(users[userId].chatsUserIsIn)
                 let userConnectionsForId = userConnections[userId];
                 if(chatId in chats){
                         if(userId in chats[chatId].usersInChat){
-                                users[userId].chatsUserIsIn.splice(users[userId].chatsUserIsIn.indexOf(chatId), 1);
+                                let indexOfChat = users[userId].chatsUserIsIn.indexOf(chatId)
+                                console.log(indexOfChat + " " + users[userId].chatsUserIsIn[indexOfChat]);
+
+                                 users[userId].chatsUserIsIn.splice(users[userId].chatsUserIsIn.indexOf(chatId), 1);// TODO: test if this is the culprit for the delete not working
+
+                                console.log("requested : " + data.id); 
                                 delete chats[chatId].usersInChat[userId]; 
 
                                 if(userConnectionsForId){ //  we have to check whether user is actually in chat or not
-
                                         userConnectionsForId.map( userConnection => { // map through all of the clients of the user, the same id could have multiple sessions
                                                 if(userConnection){
                                                         userConnection.emit("updateAll", {});
