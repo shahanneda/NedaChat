@@ -29,7 +29,7 @@ class UserChatBrowser extends Component{
         }
         render(){
                 return(
-                        <div className={"user-chat-browser-wrapper col-sm-12 col-md-2 " + (this.props.mobileIsOnChatMenu ? " mobile-hidden" : "mobile-not-hidden")}>
+                        <div className={"user-chat-browser-wrapper col-sm-12 col-md-2 " + (this.props.mobileIsOnChatMenu && !this.props.noChats ? " mobile-hidden" : "mobile-not-hidden")}>
                                 <ul className="list-group user-chat-browser-list">
                                         <li className="list-group-item user-chat-search-wrapper">
                                                 {/*<input type="text" className=" user-chat-search-input" placeholder="Search for a chat"></input>*/}

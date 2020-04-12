@@ -26,13 +26,15 @@ class Chat extends Component {
                         username:'undefinedUser',
                         currentChat: null,
                         newChatModalOn:false,
+                        serverIp:"http://216.71.213.85:7777",
+
                 }
 
 
         }
 
         tryToConnectToSocket = () => {
-                let socket = io.connect('http://192.168.1.22');
+                let socket = io.connect(this.state.serverIp);
                 socket.on("connect", data =>{
                         console.log("Connected!");
                         socket.emit("NewConnection", {
@@ -75,9 +77,9 @@ class Chat extends Component {
                                         <Switch>
 
                                                 <Route path="/chat">
-                                                        <MessageReceive newChatSelected={this.newChatSelected} socket={this.state.socket} username={this.state.username} addNewChatButton={this.addNewChatButton}/> 
+                                                        <MessageReceive serverIp={this.state.serverIp} newChatSelected={this.newChatSelected} socket={this.state.socket} username={this.state.username} addNewChatButton={this.addNewChatButton}/> 
                                                         <MessageSend currentChat={this.state.currentChat} socket={this.state.socket} username={this.state.username}  />
-                                                        {this.state.newChatModalOn ? <NewChatModal selfUserId={this.state.username} socket={this.state.socket} close={this.closeNewChatModal} /> : ""}
+                                                        {this.state.newChatModalOn ? <NewChatModal serverIp={this.state.serverIp} selfUserId={this.state.username} socket={this.state.socket} close={this.closeNewChatModal} /> : ""}
                                                 </Route>
 
                                                 <Route path="/">

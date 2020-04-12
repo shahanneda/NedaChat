@@ -26,6 +26,7 @@ class MessageSend extends Component{
                         fromUserName:this.props.username,
                         messageBody: this.state.currentMessageBoxValue,
                 }); 
+                this.setState({currentMessageBoxValue:""})
         }
         keyPress = (e) => {
                 if(e.keyCode == 13){

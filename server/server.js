@@ -100,9 +100,18 @@ chats["Group 6"] =
                 messages:{},
         }
         
-server.listen(80);
+server.listen(7777);
 console.log("NedaChat Server Started!");
 
+const getIP = require('external-ip')();
+
+getIP((err, ip) => {
+    if (err) {
+        // every service in the list has failed
+        throw err;
+    }
+    console.log(ip);
+});
 
 // Add headers
 app.use(function (req, res, next) {

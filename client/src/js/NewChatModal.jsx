@@ -92,7 +92,7 @@ class NewChatModal extends Component{
         // You already implemented this logic above, so just use it.
         onSuggestionsFetchRequested = ({ value }) => {
 
-                fetch("http://192.168.1.22/searchForUser/"+ value)
+                fetch(this.props.serverIp + "/searchForUser/"+ value)
                         .then(res => res.json())
                         .then(
                                 (result) => {

@@ -52,7 +52,7 @@ class MessageReceive extends Component{
         }
 
         componentDidMount(){
-                fetch("http://192.168.1.22/getChats/"+ this.props.username)
+                fetch(this.props.serverIp + "/getChats/"+ this.props.username)
                         .then(res => res.json())
                         .then(
                                 (result) => {
@@ -96,16 +96,16 @@ class MessageReceive extends Component{
                 if(this.state.currentChat == null){
                         return(
                                 <div>
-                                        <UserChatBrowser addNewChatButton={this.props.addNewChatButton} chats={this.state.chats} newChatSelected={this.newChatSelected} mobileIsOnChatMenu={this.state.mobileIsOnChatMenu}/>
-                                        "No Chats!"
+                                        <UserChatBrowser serverIp={this.props.serverIp} addNewChatButton={this.props.addNewChatButton} chats={this.state.chats} newChatSelected={this.newChatSelected} mobileIsOnChatMenu={this.state.mobileIsOnChatMenu} noChats={true}/>
+                                        <div className="no-chats"></div>
                                 </div>
                         );
                 }
                 return(
                         <div className="row p-4">
-                                <div className="sideMenuButton btn"  onClick={this.menuButtonClicked}> Menu </div>
+                                <div className="sideMenuButton btn"  onClick={this.menuButtonClicked}> {this.state.mobileIsOnChatMenu ? "Menu" : "Back to Chat"} </div>
 
-                                <UserChatBrowser addNewChatButton={this.props.addNewChatButton} chats={this.state.chats} newChatSelected={this.newChatSelected} mobileIsOnChatMenu={this.state.mobileIsOnChatMenu}/>
+                                <UserChatBrowser serverIp={this.props.serverIp} addNewChatButton={this.props.addNewChatButton} chats={this.state.chats} newChatSelected={this.newChatSelected} mobileIsOnChatMenu={this.state.mobileIsOnChatMenu} noChats={false}/>
 
                                 <IndividualChat key= {this.state.currentChat.id} chat={this.state.currentChat } username={this.props.username} mobileIsOnChatMenu={this.state.mobileIsOnChatMenu}/>
 
