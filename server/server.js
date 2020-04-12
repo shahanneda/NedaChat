@@ -290,12 +290,12 @@ users["bob"] =
                         let userConnectionsForId = userConnections[userId];
                         usersCollection.findOne({_id: userId}, (err,oldUser) =>{
                                 oldUser.chatsUserIsIn.splice(oldUser.chatsUserIsIn.indexOf(chatId), 1);
-                                userConnections.update({_id: userId}, oldUser, {upset: true});
+                                usersCollection.update({_id: userId}, oldUser, {upsert: false});
                         });
 
                         chatsCollection.findOne({_id: chatId}, (err,oldChat) =>{
                                 delete oldChat.usersInChat[userId]; 
-                                userConnections.update({_id: oldChat}, oldChat, {upset: true});
+                                chatsCollection.update({_id: chatId}, oldChat, {upsert: false});
                         });
 
                         if(userConnectionsForId){ //  we have to check whether user is actually in chat or not

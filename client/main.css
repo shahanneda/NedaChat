@@ -176,7 +176,7 @@ button, input {
 
         overflow: scroll;
         height: 70vh;
-        /* make this not mobail alter on*/
+        width:100%;
 }
 
 
