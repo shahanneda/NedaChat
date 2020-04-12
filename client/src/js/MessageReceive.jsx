@@ -42,6 +42,11 @@ class MessageReceive extends Component{
                         this.setState( { chats: localChats} );
                         console.log("Recieved chat update");
                 });
+                this.props.socket.on("updateAll", data=>{
+                        console.log("updating all");
+                        this.doFetchOfChats();
+
+                });
                 this.props.socket.on("addedToNewChat", data => {
 
                 });
@@ -52,6 +57,10 @@ class MessageReceive extends Component{
         }
 
         componentDidMount(){
+                this.doFetchOfChats();
+        }
+
+        doFetchOfChats = () =>{
                 fetch(this.props.serverIp + "/getChats/"+ this.props.username)
                         .then(res => res.json())
                         .then(
@@ -65,7 +74,6 @@ class MessageReceive extends Component{
                                         console.log("Error in gettin chats");
                                 }
                         )
-
         }
 
         messageBoxOnChange(event){
@@ -89,6 +97,12 @@ class MessageReceive extends Component{
                         $('.individual-chat-wrapper').hide('slide', {direction: 'up'}, 100);
                 }*/
         }
+        editChatButtonPressed = (chatId) => {
+                console.log("chat id" + chatId);
+                console.log(this.state.chats[chatId]);
+                this.props.editChatButtonPressed(this.state.chats[chatId]);
+        }
+
         render(){
                 if(this.props.socket == null){
                         return(<Redirect to="/"/ >);
@@ -96,7 +110,7 @@ class MessageReceive extends Component{
                 if(this.state.currentChat == null){
                         return(
                                 <div>
-                                        <UserChatBrowser serverIp={this.props.serverIp} addNewChatButton={this.props.addNewChatButton} chats={this.state.chats} newChatSelected={this.newChatSelected} mobileIsOnChatMenu={this.state.mobileIsOnChatMenu} noChats={true}/>
+                                        <UserChatBrowser serverIp={this.props.serverIp} addNewChatButton={this.props.addNewChatButton} chats={this.state.chats} newChatSelected={this.newChatSelected} mobileIsOnChatMenu={this.state.mobileIsOnChatMenu} noChats={true} editChatButtonPressed={this.editChatButtonPressed}/>
                                         <div className="no-chats"></div>
                                 </div>
                         );
@@ -105,7 +119,7 @@ class MessageReceive extends Component{
                         <div className="row p-4">
                                 <div className="sideMenuButton btn"  onClick={this.menuButtonClicked}> {this.state.mobileIsOnChatMenu ? "Menu" : "Back to Chat"} </div>
 
-                                <UserChatBrowser serverIp={this.props.serverIp} addNewChatButton={this.props.addNewChatButton} chats={this.state.chats} newChatSelected={this.newChatSelected} mobileIsOnChatMenu={this.state.mobileIsOnChatMenu} noChats={false}/>
+                                <UserChatBrowser serverIp={this.props.serverIp} addNewChatButton={this.props.addNewChatButton} chats={this.state.chats} newChatSelected={this.newChatSelected} mobileIsOnChatMenu={this.state.mobileIsOnChatMenu} noChats={false} editChatButtonPressed={this.editChatButtonPressed} doFetchOfChats={this.doFetchOfChats}/>
 
                                 <IndividualChat key= {this.state.currentChat.id} chat={this.state.currentChat } username={this.props.username} mobileIsOnChatMenu={this.state.mobileIsOnChatMenu}/>
 

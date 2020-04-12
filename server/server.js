@@ -12,25 +12,26 @@ let userConnections = {};
 
 let users = {};
 users["shahanneda"] = 
-{ 
-        id:"shahanneda", 
-        username:"shahanneda", 
-        chatsUserIsIn:["Group 1","Group 2","Group 3","Group 4","Group 5"],
-}
+        { 
+                id:"shahanneda", 
+                username:"shahanneda", 
+                chatsUserIsIn:["Group 1"],
+        }
 
 users["sam"] = 
-{ 
-        id:"sam", 
-        username:"sam", 
-        chatsUserIsIn:["Group 1","Group 2","Group 3","Group 4","Group 5", "Group 6"],
+        { 
+                id:"sam", 
+                username:"sam", 
+                chatsUserIsIn:["Group 1"],
 
-}
+        }
+/*
 users["bob"] = 
 { 
         id:"bob", 
         username:"bob", 
         chatsUserIsIn:[ "Group 6"],
-}
+}*/
 
 chats["Group 1"] =
         { 
@@ -42,75 +43,20 @@ chats["Group 1"] =
                 },
                 messages:{},
         }
-chats["Group 2"] =
-        { 
-                id:"Group 2",
-                name:"Group 2",
-                usersInChat:{
-                        "shahanneda": users["shahanneda"],
-                        "sam": users["sam"],
-                },
-                messages:{},
-        }
-chats["Group 3"] =
-        { 
-                id:"Group 3",
-                name:"Group 3",
-                usersInChat:{
-                        "shahanneda": users["shahanneda"],
-                        "sam": users["sam"],
-                },
-                messages:{},
-        }
-chats["Group 4"] =
-        { 
-                id:"Group 4",
-                name:"Group 4",
-                usersInChat:{
-                        "shahanneda": users["shahanneda"],
-                        "sam": users["sam"],
-                },
-                messages:{},
-        }
-chats["Group 5"] =
-        { 
-                id:"Group 5",
-                name:"Group 5",
-                usersInChat:{
-                        "shahanneda": users["shahanneda"],
-                        "sam": users["sam"],
-                },
-                messages:{},
-        }
 
-chats["Group 6"] =
-        { 
-                id:"Group 6",
-                name:"Group 6",
-                usersInChat:{
-                        "bob" : {
-                                id:"bob",
-                                username:"bob",
-                        },
-                        "sam":{
-                                id:"sam",
-                                username:"Sam",
-                        }
-                },
-                messages:{},
-        }
-        
+
+
 server.listen(7777);
 console.log("NedaChat Server Started!");
 
 const getIP = require('external-ip')();
 
 getIP((err, ip) => {
-    if (err) {
-        // every service in the list has failed
-        throw err;
-    }
-    console.log(ip);
+        if (err) {
+                // every service in the list has failed
+                throw err;
+        }
+        console.log(ip);
 });
 
 // Add headers
@@ -152,7 +98,7 @@ app.get('/searchForUser/:username', function(req,res){
         for(let userid of Object.keys(users)){
                 console.log(userid);
                 if(userid.indexOf(username) != -1){
-                      usersToSend[userid] = users[userid].username;  
+                        usersToSend[userid] = users[userid].username;  
                 }
         }
         console.log(usersToSend);
@@ -174,7 +120,7 @@ io.on('connection', function (socket) {
                 }else{
                         userConnections[data.user.id]  = [socket];  
                 }
-                
+
                 if(!(data.user.id in users)){
                         users[data.user.id] = {
                                 id: data.user.id,
@@ -248,6 +194,57 @@ io.on('connection', function (socket) {
                 console.log("creating chat!");
                 console.log(newChat);
                 chats[newChat.id] = newChat;
+        });
+
+        socket.on("editChat", function(data){
+                let newChat = {
+                        id:data.id,
+                        name:data.name,
+                        usersInChat: data.usersInChat,
+                        messages: chats[data.id].messages ,
+                };
+                Object.keys(data.usersInChat).map( (userid) => {
+                        users[userid].chatsUserIsIn.push( data.id);
+
+                        let userConnectionsForId = userConnections[userid];
+                        if(userConnectionsForId){ //  we have to check whether user is actually in chat or not
+
+                                userConnectionsForId.map( userConnection => { // map through all of the clients of the user, the same id could have multiple sessions
+                                        if(userConnection){
+                                                userConnection.emit("chatUpdate", newChat);
+                                                console.log("sending message to " + userid );
+                                        }
+                                });
+                        }
+
+                });
+                console.log("editing chat!");
+                console.log(newChat);
+                chats[newChat.id] = newChat;
+        });
+
+        socket.on("leaveChat", function(data){
+                let chatId = data.id
+                let userId = data.userId;
+                console.log("leave chat: " + chatId + " for user: " + userId);
+
+                let userConnectionsForId = userConnections[userId];
+                if(chatId in chats){
+                        if(userId in chats[chatId].usersInChat){
+                                users[userId].chatsUserIsIn.splice(users[userId].chatsUserIsIn.indexOf(chatId), 1);
+                                delete chats[chatId].usersInChat[userId]; 
+
+                                if(userConnectionsForId){ //  we have to check whether user is actually in chat or not
+
+                                        userConnectionsForId.map( userConnection => { // map through all of the clients of the user, the same id could have multiple sessions
+                                                if(userConnection){
+                                                        userConnection.emit("updateAll", {});
+                                                        console.log("sending updateallrequest to " + userId );
+                                                }
+                                        });
+                                }
+                        }
+                }
         });
 
 });

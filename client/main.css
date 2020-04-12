@@ -166,7 +166,12 @@ button, input {
 .user-chip-close-btn:hover{
         color: #6afcfd;
 }
-
+.user-chip-new-user{
+        background-color: #b400ff;
+}
+.edit-chat-button{
+    float: right;
+}
 .user-chat-browser-list {
 
         overflow: scroll;

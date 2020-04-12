@@ -41,7 +41,7 @@ class UserChatBrowser extends Component{
                                                         return(
                                                                 <li onClick={ () => this.handleListItemClicked(chat.id)} key={chat.id} className={"list-group-item user-chat-browser-list-item" + (
                                                                         (this.state.chatSelected != null) ? (this.state.chatSelected.id == chat.id ? " active" : "") : ""
-                                                                )}  >{chat.name} </li>
+                                                                )}  >{chat.name} <button className="btn btn-secondary edit-chat-button" onClick={() => this.props.editChatButtonPressed(chat.id)}>✎</button></li>
 
                                                         );
                                                 })

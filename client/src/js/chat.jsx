@@ -6,6 +6,7 @@ import MessageSend from "./MessageSend.jsx"
 import MessageReceive from "./MessageReceive.jsx"
 import Login from "./Login.jsx";
 import NewChatModal from "./NewChatModal.jsx";
+import EditChatModal from "./EditChatModal.jsx";
 import {
         HashRouter as Router,
         Switch,
@@ -26,6 +27,8 @@ class Chat extends Component {
                         username:'undefinedUser',
                         currentChat: null,
                         newChatModalOn:false,
+                        editChatModalOn: false,
+                        currentEditingChat: null,
                         serverIp:"http://216.71.213.85:7777",
 
                 }
@@ -68,6 +71,13 @@ class Chat extends Component {
         closeNewChatModal = () => {
                 this.setState({newChatModalOn: false}); 
         }
+        
+        editChatButtonPressed = (chat) => {
+                this.setState({editChatModalOn: true, currentEditingChat: chat});
+        }
+        closeEditChatModal = () =>{
+                this.setState({editChatModalOn: false}) 
+        }
 
         render(){
 
@@ -77,9 +87,10 @@ class Chat extends Component {
                                         <Switch>
 
                                                 <Route path="/chat">
-                                                        <MessageReceive serverIp={this.state.serverIp} newChatSelected={this.newChatSelected} socket={this.state.socket} username={this.state.username} addNewChatButton={this.addNewChatButton}/> 
+                                                        <MessageReceive serverIp={this.state.serverIp} editChatButtonPressed={this.editChatButtonPressed} newChatSelected={this.newChatSelected} socket={this.state.socket} username={this.state.username} addNewChatButton={this.addNewChatButton}/> 
                                                         <MessageSend currentChat={this.state.currentChat} socket={this.state.socket} username={this.state.username}  />
                                                         {this.state.newChatModalOn ? <NewChatModal serverIp={this.state.serverIp} selfUserId={this.state.username} socket={this.state.socket} close={this.closeNewChatModal} /> : ""}
+                                                        {this.state.editChatModalOn ? <EditChatModal chat={this.state.currentEditingChat} serverIp={this.state.serverIp} selfUserId={this.state.username} socket={this.state.socket} close={this.closeEditChatModal} /> : ""}
                                                 </Route>
 
                                                 <Route path="/">
