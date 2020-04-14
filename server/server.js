@@ -12,10 +12,12 @@ let path = require("path");
 let chats = {};
 
 let userConnections = {}; // stores all the different sockets to the different users so we can send them messages
+let socketIdToUserId = {};
 
 let users = {};
 
 let chatsUserIsPartOfStorage = {}; // used for the getchats api endpoint
+
 users["shahanneda"] = 
         { 
                 id:"shahanneda", 
@@ -143,6 +145,8 @@ users["bob"] =
                         }else{
                                 userConnections[data.user.id]  = [socket];  
                         }
+                        socketIdToUserId[socket.id] = data.user.id;
+
                         usersCollection.findOne({_id: data.user.id}, (err, result) => {
                                 if(result == null){
                                         console.log("did not find user: " +data.user.id + " making new user");
@@ -172,20 +176,31 @@ users["bob"] =
                         console.log("New User Connected: name: " + data.user.id);
                 });
 
+                socket.on("disconnect", function(data){
+                        if(socket.id in socketIdToUserId){
+                                let userId = socketIdToUserId[socket.id];
+                                console.log("User " + userId + " disconnected!");
+                                userConnections[userId].splice(userConnections[userId].indexOf(socket), 1);
+
+                        }
+                });
+
                 socket.on("newMessage", function(data){
 
                         chatsCollection.findOne({_id:data.chatId}, (err,chat) =>{
                                 console.log("found chat:");
                                 console.log(chat);
+                                if(chat == null){
+                                        console.log("ERROR: CHAT NULL WHEN SHOULD NOT HAVE BEEN, ID:" + data.chatId); 
+                                        return;
+                                }
                                 chat.messages[data.id] = data; //  data is the message object 
                                 chatsCollection.update({_id:data.chatId}, chat, {upsert: true});
 
                                 let usersInChat = chat.usersInChat;
                                 console.log(usersInChat);
                                 for(let userid in usersInChat){
-                                        console.log("user id :" + userid);
                                         let userConnectionsForId = userConnections[userid];
-                                        console.log("trying gto get user: " + userid + " user connections " + userConnections);
                                         //console.log(userConnections);
                                         if(userConnectionsForId){ //  we have to check whether user is actually in chat or not
 
