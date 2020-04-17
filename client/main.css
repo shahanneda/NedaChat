@@ -3,7 +3,7 @@ body{
 }
 
 .message-wrapper {
-        border-radius: 3rem;
+        border-radius: 3rem !important;
         background-color: #e0fffe;
         margin-top: 11px;
         max-width: 76%;
