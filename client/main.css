@@ -3,12 +3,13 @@ body{
 }
 
 .message-wrapper {
-        border-radius: 21rem !important;
+        border-radius: 3rem;
         background-color: #e0fffe;
         margin-top: 11px;
         max-width: 76%;
         left: 25%;
         width: fit-content;
+        display: table;
 }
 
 .message-wrapper-author{
@@ -216,6 +217,7 @@ button, input {
 
         .message-wrapper{
                 left: 4% ;
+                padding: 22px;
         }
         .message-wrapper-author {
                 left: 0% ;
@@ -232,7 +234,7 @@ button, input {
                 right:2px;
                 top:21px;
                 position:absolute;
-                z-index: 9999;
+                z-index: 1000;
                 padding: 16px;
                 background: #007bff;
                 color: white !important;

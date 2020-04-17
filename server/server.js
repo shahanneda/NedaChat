@@ -117,11 +117,8 @@ users["bob"] =
                 username = username.toLowerCase();
                 usersCollection.find({}).toArray( (err,result) =>{
                         let usersToSend = {};
-                        console.log("all users:");
-                        console.log(result);
                         result.map( user => {
                                 let userid = user.id;
-                                console.log("userid " + userid);
                                 if(userid.indexOf(username) != -1){
                                         usersToSend[userid] =  user;  
                                 }
@@ -188,8 +185,6 @@ users["bob"] =
                 socket.on("newMessage", function(data){
 
                         chatsCollection.findOne({_id:data.chatId}, (err,chat) =>{
-                                console.log("found chat:");
-                                console.log(chat);
                                 if(chat == null){
                                         console.log("ERROR: CHAT NULL WHEN SHOULD NOT HAVE BEEN, ID:" + data.chatId); 
                                         return;
@@ -198,7 +193,6 @@ users["bob"] =
                                 chatsCollection.update({_id:data.chatId}, chat, {upsert: true});
 
                                 let usersInChat = chat.usersInChat;
-                                console.log(usersInChat);
                                 for(let userid in usersInChat){
                                         let userConnectionsForId = userConnections[userid];
                                         //console.log(userConnections);
@@ -216,6 +210,8 @@ users["bob"] =
                                 //socket.broadcast.emit("newMessage", data);
 
                         });
+                        console.log("New Message: "); 
+                        console.log(data);
                         //console.log(chat);
                 });
 
