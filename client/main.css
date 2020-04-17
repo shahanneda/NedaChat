@@ -10,6 +10,10 @@ body{
         left: 25%;
         width: fit-content;
         display: table;
+        /*  this is all fixing the round border background from showing through */
+        -moz-background-clip: padding; 
+        -webkit-background-clip: padding-box;
+        background-clip: padding-box;
 }
 
 .message-wrapper-author{
@@ -171,7 +175,7 @@ button, input {
         background-color: #b400ff;
 }
 .edit-chat-button{
-    float: right;
+        float: right;
 }
 .user-chat-browser-list {
 
