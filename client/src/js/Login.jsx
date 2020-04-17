@@ -1,8 +1,8 @@
 import React, {Component} from "react";
 import {Redirect} from "react-router-dom";
+import Cookies from 'universal-cookie';
 
-
-const username = "shahanneda"; //TEMP
+const cookies = new Cookies();
 class Login extends Component {
 
         constructor(props){
@@ -11,10 +11,16 @@ class Login extends Component {
                         usernameField:"",
                         loginComplete:false,//maybe have this set from a prop inorder to validate the login from above
                 }
+                console.log(cookies.get('username')); // Pacman
+                let username = cookies.get('username');
+                if(username != null && username !=  undefined){
+                        this.state.usernameField = username; //its ok to directly change state since in constructor
+                }
         }
 
         formSubmit = (event) =>{
                 event.preventDefault();
+                cookies.set('username', this.state.usernameField.toLowerCase(), { path: '/' });
                 this.props.usernameSet(this.state.usernameField.toLowerCase() ); 
                 this.setState({loginComplete:true});
 
