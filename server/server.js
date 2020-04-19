@@ -92,7 +92,6 @@ users["bob"] =
         app.use(express.static(path.join(__dirname + '/../client/')));
 
         app.get('/getChats/:userid', function(req,res){
-                console.log("apiEndpoint: getchats triggered");
                 let userid = req.params.userid; 
                 usersCollection.findOne({_id: userid}, (err, user) => {
                         if(user != null){

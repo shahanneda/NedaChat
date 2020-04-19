@@ -159,7 +159,7 @@ class EditChatModal extends Component{
                                 <div className="modal-dialog" role="document">
                                         <div className="modal-content">
                                                 <div className="modal-header">
-                                                        <h5 className="modal-title">New Chat</h5>
+                                                        <h5 className="modal-title">Edit Chat</h5>
                                                         <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                                                 <span>&times;</span>
                                                         </button>
@@ -209,7 +209,7 @@ class EditChatModal extends Component{
                                                         </form>
                                                         <div className="modal-footer">
                                                                 <button type="button" onClick={this.leaveChatButtonClicked} className="btn btn-danger">Leave Chat</button>
-                                                                <button type="button" onClick={this.createChatButtonClicked} className="btn btn-primary">Edit Chat</button>
+                                                                <button type="button" onClick={this.createChatButtonClicked} className="btn btn-primary">Save Changes</button>
                                                         </div>
                                                 </div>                                                
                                         </div>
