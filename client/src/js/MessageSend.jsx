@@ -25,6 +25,7 @@ class MessageSend extends Component{
                         chatId: this.props.currentChat.id,
                         fromUserName:this.props.username,
                         messageBody: this.state.currentMessageBoxValue,
+                        time: Date.now(),
                 }); 
                 this.setState({currentMessageBoxValue:""})
         }

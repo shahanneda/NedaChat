@@ -51,6 +51,20 @@ function connectedToMongoDb(){
         let chatsCollection = db.collection("chats");
         let usersCollection = db.collection("users");
 
+       /* chatsCollection.find({}).toArray((err,chats) =>{    // This was to migarte old messages and add time to them
+                chats.map( chat =>{
+                        let messages = chat.messages;
+
+                        Object.keys(messages).map( id =>{
+                                let time = id.substr(0,13);
+                                messages[id].time = time;
+                        });
+                        chat.messages = messages;
+                        chatsCollection.update({id:  chat.id}, chat);  
+                });
+
+
+        }); */
         /*
 users["bob"] = 
 { 
@@ -269,10 +283,10 @@ users["bob"] =
                                         //users[userid].chatsUserIsIn(data.id); we do not need to change that since the chat id never changed!
 
                                         usersCollection.findOne({_id: userid}, (err,result) =>{ // check if user does not know they are in chat and tell them
-                                               if(result.chatsUserIsIn.indexOf(data.id) == -1){
+                                                if(result.chatsUserIsIn.indexOf(data.id) == -1){
                                                         result.chatsUserIsIn.push(data.id);
-                                                       usersCollection.update({_id: userid}, result, {upsert: false});
-                                               }
+                                                        usersCollection.update({_id: userid}, result, {upsert: false});
+                                                }
 
                                         });
                                         let userConnectionsForId = userConnections[userid];

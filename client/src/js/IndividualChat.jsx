@@ -19,13 +19,11 @@ class IndividualChat extends Component{
                                                         Object.keys(this.props.chat.messages).map(  key => {
                                                                 let message = this.props.chat.messages[key]
                                                                 console.log(this.props.username  + " " + message.fromUserName);
-                                                                return <Message key={message.id} author={message.fromUserName} isSelfMessage={message.fromUserName ===   this.props.username} body={message.messageBody} />;
+                                                                return <Message key={message.id} author={message.fromUserName} time={message.time} isSelfMessage={message.fromUserName ===   this.props.username} body={message.messageBody} />;
                                                         })
                                                 }
 
-                                                <div style={{ float:"left", clear: "both" }}
-                                                        ref={(el) => { this.messagesEnd = el; }}>
-                                                </div>
+                                                <div className="end-messages-hidden-bar" ref={(el) => { this.messagesEnd = el; }}> </div>
                                         </div>
                                 </div>
                         </div>

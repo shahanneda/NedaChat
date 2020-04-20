@@ -21,9 +21,29 @@ body{
         margin-left: auto;
         background-color: #dcffe3;
 }
-.message-sender {
-        color: darkblue;
+.message-header {
+        display:inline-block;
+        font-style: bold;
+        padding-bottom: 5px;
 }
+
+.message-time{
+        color:green;
+        display: inline;
+}
+
+.message-sender {
+        display: inline;
+        color: darkblue;
+        margin: 10px;
+}
+
+.end-messages-hidden-bar{
+        float:left;
+        clear:both;
+        margin-top: 2vh;
+}
+
 
 .chat-title{
         text-align: center;
