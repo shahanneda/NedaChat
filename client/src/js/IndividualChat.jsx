@@ -18,7 +18,6 @@ class IndividualChat extends Component{
                                                 {
                                                         Object.keys(this.props.chat.messages).map(  key => {
                                                                 let message = this.props.chat.messages[key]
-                                                                console.log(this.props.username  + " " + message.fromUserName);
                                                                 return <Message key={message.id} author={message.fromUserName} time={message.time} isSelfMessage={message.fromUserName ===   this.props.username} body={message.messageBody} />;
                                                         })
                                                 }
