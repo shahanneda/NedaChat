@@ -10,6 +10,7 @@ class IndividualChat extends Component{
         }
 
         render(){
+
                 return(
                         <div className={"card col-sm-12 col-md-10 individual-chat-wrapper " + (this.props.mobileIsOnChatMenu ? "mobile-not-hidden" : " mobile-hidden")}>
                                 <div className="card-body">

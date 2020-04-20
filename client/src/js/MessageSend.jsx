@@ -16,8 +16,7 @@ class MessageSend extends Component{
         }
 
         handleButtonClick(){
-                console.log("sent message");
-                if(this.props.currentChat == null){
+                if(this.props.currentChat == null || this.state.currentMessageBoxValue.localeCompare("") == 0){
                         return;
                 }
                 this.props.socket.emit("newMessage", {
@@ -27,6 +26,7 @@ class MessageSend extends Component{
                         messageBody: this.state.currentMessageBoxValue,
                         time: Date.now(),
                 }); 
+                console.log("sent message");
                 this.setState({currentMessageBoxValue:""})
         }
         keyPress = (e) => {

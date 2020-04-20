@@ -19,7 +19,7 @@ body{
 .message-wrapper-author{
         left: -25%;
         margin-left: auto;
-        background-color: #dcffe3;
+        background-color: #dcffe3 !important;
 }
 .message-header {
         display:inline-block;
