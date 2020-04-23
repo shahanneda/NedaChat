@@ -98,7 +98,7 @@ class NewChatModal extends Component{
                                 (result) => {
                                         let newSuggestions = [];
                                         for(let user of Object.keys(result)){
-                                                newSuggestions.push(result[user].ir); 
+                                                newSuggestions.push(result[user].id); 
                                         }
                                         this.setState({
                                                 suggestions: newSuggestions
