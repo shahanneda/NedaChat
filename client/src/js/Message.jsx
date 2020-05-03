@@ -50,6 +50,5 @@ function stringToRGB(s){
         let g = (hash & 0x00FF00) >> 8;
         let b = hash & 0x0000FF;
 
-        console.log(hash);
         return "rgb(" + r/2 + "," + g + "," + b + ", 0.2)" 
 }

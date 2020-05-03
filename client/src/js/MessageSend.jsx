@@ -1,5 +1,7 @@
 import React, {Component} from "react";
+import adapter from 'webrtc-adapter';
 
+import VideoChat from './VideoChat.jsx';
 class MessageSend extends Component{
         constructor(props){
                 super(props)
@@ -8,6 +10,7 @@ class MessageSend extends Component{
                 this.handleButtonClick = this.handleButtonClick.bind(this);
                 this.state = {
                         currentMessageBoxValue:"",
+                        videoChatOn:false,
                 };
         }
 
@@ -38,7 +41,14 @@ class MessageSend extends Component{
         render(){
                 return(
                         <div className="bottom-bar">
+                          {this.state.videoChatOn ? <VideoChat /> : ""}
                                 <div className="message-send-wrapper input-group ">
+                                        <div className="video-chat-footer-wrapper input-group-btn">
+                                          <button className="join-video-chat-button btn btn-primary mr-2"  onClick={() => this.setState({videoChatOn:true})}>
+                                                    Join VideoChat
+                                                </button>
+                                        </div>
+
                                         <div className="message-input-box-wrapper">
                                                 <input className="input-box form-control" type="text" onKeyDown={this.keyPress} value={this.state.currentMessageBoxValue} onChange={this.messageBoxOnChange}/>
                                         </div>
