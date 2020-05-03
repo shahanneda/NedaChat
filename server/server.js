@@ -6,7 +6,10 @@ const server = require("http").Server(app); // create the http servere and conen
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
 
-const io = require("socket.io")(server); // setup socekt io
+const io = require("socket.io")(server, { origins: '*:*'} );; // setup socekt io
+const cors = require('cors');
+io.set('origins', '*:*');
+io.origins('*:*') // for latest version
 
 let path = require("path");
 let chats = {};
@@ -100,6 +103,9 @@ users["bob"] =
                 res.setHeader('Access-Control-Allow-Credentials', true);
                 next();
         });
+
+        app.use(cors());
+
         app.get('/', function (req, res) {
                 res.sendFile(path.join(__dirname + '/../client/index.html'));
         });
@@ -141,7 +147,6 @@ users["bob"] =
                 });
 
         });
-
 
         io.on('connection', function (socket) {
 
