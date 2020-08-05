@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"nedachat.users"}],"uuid":"0ec3d8579d354fae89c333d8c395a838"}

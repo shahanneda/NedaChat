@@ -19,8 +19,10 @@ let socketIdToUserId = {};
 
 let users = {};
 
+
 let chatsUserIsPartOfStorage = {}; // used for the getchats api endpoint
 
+let auth = require("./auth.json");
 users["shahanneda"] = 
         { 
                 id:"shahanneda", 
@@ -36,17 +38,20 @@ users["sam"] =
 
         }
 
-const url = 'mongodb://localhost:27017';
+// const url = 'mongodb://localhost:27017'; // this was from the time the database was local
+const uri = 'mongodb+srv://nedaChatAdmin:' + auth.dbPassword + '@nedacluster-7z4i0.mongodb.net/nedachat?retryWrites=true&w=majority';
 const dbName = 'nedachat';
 let db = null; 
 
-MongoClient.connect(url, function(err, client) {
-        assert.equal(null, err);
+const client = new MongoClient(uri, { useNewUrlParser: true });
+client.connect(err => {
         console.log("Connected successfully to to mongodb server");
         db = client.db(dbName);
         connectedToMongoDb();
-
+  // client.close();
 });
+
+
 
 function connectedToMongoDb(){
         db.createCollection('chats');
