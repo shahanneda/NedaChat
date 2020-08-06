@@ -109,7 +109,8 @@ users["bob"] =
                 next();
         });
 
-        app.use(cors());
+        app.use(cors({ origin: 'http://shahan.ca', credentials: true }));
+
 
         app.get('/', function (req, res) {
                 res.sendFile(path.join(__dirname + '/../client/index.html'));
