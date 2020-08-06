@@ -37,7 +37,8 @@ class Chat extends Component {
         }
 
         tryToConnectToSocket = () => {
-                let socket = io.connect(this.state.serverIp, {path: "/holo/socket.io"});
+                let socket = io.connect(this.state.serverIp, { resource: '/holo/socket.io' ,path: "/holo/socket.io"});
+
                 socket.on("connect", data =>{
                         console.log("Connected!");
                         socket.emit("NewConnection", {
