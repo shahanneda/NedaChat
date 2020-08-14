@@ -8,7 +8,7 @@ and react for the frontend. Another very import library was **socket.io** which 
 recieve instant updates when a new chat is sent.
 
 ## Features and Techniques used:
-- Groups chats of as many users as needed, along with personlal messages
+- Groups chats of as many users as needed, along with personal messages
 - Websockets for **instant updates with all the users in the chat**
 - Smart managing of all the different clients connected and their websockets, including allowing multiple clients per each user
 - Optimising data sent, while making sure all clients stay in sync
