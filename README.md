@@ -1,7 +1,7 @@
 # NedaChat
 ## An Instant messaging app featuring group chats, personal messages, and more!
 
-### [Click Here to go to NedaChat (shahan.ca/nedachat)](http://shahan.ca/nedachat)
+### [Click Here to go to NedaChat (shahan.ca/nedachat)](http://shahan.ca/nedachat), Login as any username
 
 This app is essentially a clone of Facebook messenger, made with the MERN stack, using mongo db for the database, express and node js for the server,
 and react for the frontend. Another very import library was **socket.io** which provided the instant messing web sockets, that allows all users in the chat to 
