@@ -29,7 +29,7 @@ class Chat extends Component {
                         newChatModalOn:false,
                         editChatModalOn: false,
                         currentEditingChat: null,
-                        serverIp:"http://138.197.152.208/holo",
+                        serverIp:"http://18.216.129.53",
 
                 }
 
@@ -37,7 +37,7 @@ class Chat extends Component {
         }
 
         tryToConnectToSocket = () => {
-                let socket = io.connect(this.state.serverIp, { resource: '/holo/socket.io' ,path: "/holo/socket.io"});
+                let socket = io.connect(this.state.serverIp);
 
                 socket.on("connect", data =>{
                         console.log("Connected!");
