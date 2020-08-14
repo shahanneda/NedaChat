@@ -17,6 +17,7 @@ recieve instant updates when a new chat is sent.
 ## Libraries and tools used:
 - MongoDb for the database, and MongoDb atlas for hosting the databse
 - Node js for the server side
+- Amazon Aws EC2 for hositng the server
 - Express for the server
 - SocketIo for comminicating with websockets from the server to the client instatly
 - React for the frontend web page
