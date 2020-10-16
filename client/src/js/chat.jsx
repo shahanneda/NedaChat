@@ -29,7 +29,7 @@ class Chat extends Component {
                         newChatModalOn:false,
                         editChatModalOn: false,
                         currentEditingChat: null,
-                        serverIp:"http://18.216.129.53",
+                        serverIp:"http://shahanneda.xyz",
 
                 }
 
