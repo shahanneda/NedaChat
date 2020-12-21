@@ -24,7 +24,7 @@ and react for the frontend. Another very important library was **socket.io** whi
 
  
 
-## Running
+## Running the Server Locally
 
 - setup mongo db database, either on atlas or locally
 - install required dependencies with npm install 
